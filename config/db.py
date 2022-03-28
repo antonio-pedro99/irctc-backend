@@ -1,6 +1,9 @@
 from sqlalchemy import create_engine, MetaData
 import databases
 
+#change the root and the password with your own
+
+#change the name railway_system to whatever you saved the database
 DATABASE_URL = "mysql+pymysql://root:password1234@localhost:3306/railway_system"
 
 database = databases.Database(DATABASE_URL)
