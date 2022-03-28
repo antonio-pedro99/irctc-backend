@@ -1,0 +1,8 @@
+cryptography==36.0.2
+databases==0.5.5
+fastapi==0.75.0
+pydantic==1.9.0
+SQLAlchemy==1.4.32
+uvicorn==0.13.4
+aiosqlite
+aiomysql
