@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 from config.db import database
 from config import db
 from routes.passengers import passenger_route
@@ -9,8 +10,8 @@ from models.users import users
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allowed_methods = ["*"],
-    allowed_orgins = ["*"]
+    allow_methods = ["*"],
+    allow_origins = ["*"]
 )
 
 app.include_router(passenger_route)
@@ -25,3 +26,5 @@ async def startup():
 async def shutdwon():
     pass
 
+if __name__ == "__main__":
+    uvicorn.run(app, reload =True)
