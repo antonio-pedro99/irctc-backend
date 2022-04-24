@@ -11,5 +11,7 @@ passengers = Table(
     Column("email", String(255)),
     Column("phone", String(255)),
     Column("age", Integer),
+
+
 )
 meta.create_all(engine)

@@ -32,13 +32,13 @@ def get_trips(location_from:str, location_to:Optional[str]):
                         FROM
                             stations AS S
                         WHERE
-                            S.location = '{0}')
+                            S.city = '{0}')
                         AND R.final_destination IN (SELECT
                             id
                         FROM
                             stations AS S
                         WHERE
-                            S.location = '{1}'))
+                            S.city = '{1}'))
                 AND T.train_id IN (SELECT
                     train_id
                 FROM

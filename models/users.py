@@ -8,6 +8,9 @@ users = Table(
     Column("id", Integer, primary_key=True),
     Column("name", String(255)),
     Column("email", String(255)),
-    Column("upassword", String(255))
+    Column("phone", String(255)),
+    Column("age", Integer),
+    Column("gender",String(6)),
+    Column("upassword", String(255)),
 )
 meta.create_all(engine)
