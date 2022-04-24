@@ -5,12 +5,14 @@ use railway_system;
 CREATE TABLE passengers (
     `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
-    `gender` VARCHAR(6) NOT NULL DEFAULT 'male',
+    `gender` varchar(255) not null,
     `email` VARCHAR(255) NOT NULL UNIQUE,
-    `phone` VARCHAR(100) NOT NULL UNIQUE,
+    `phone` VARCHAR(10) NOT NULL UNIQUE,
     `age` MEDIUMINT NOT NULL,
     PRIMARY KEY (`id`),
     INDEX(id, name)
+    constraint chck_phone CHECK(phone REGEXP '^[0-9]+$'),
+    constraint chck_dob CHECK(7<age<87),
 )  AUTO_INCREMENT=1;
 
 CREATE TABLE stations (
@@ -20,6 +22,7 @@ CREATE TABLE stations (
   `code` VARCHAR(255) NOT NULL UNIQUE,
   PRIMARY KEY (`id`),
   INDEX(id, city, code)
+  `code` VARCHAR(5) NOT NULL UNIQUE,
 ) AUTO_INCREMENT=1;
 
 INSERT INTO stations (`city`,`name`,`code`)
@@ -195,31 +198,21 @@ VALUES
   ("Imphal","South Imphal","SIM"),
   ("Ranchi","South Ranchi","SRA");
 
-CREATE TABLE users (
+CREATE TABLE `users` (
 	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
-    `gender` VARCHAR(6) NOT NULL DEFAULT 'male',
+    `gender` varchar(255) not null,
     `email` VARCHAR(255) NOT NULL UNIQUE,
-    `phone` VARCHAR(100) NOT NULL UNIQUE,
+    `phone` VARCHAR(10) NOT NULL UNIQUE,
     `age` MEDIUMINT NOT NULL,
 	`upassword` varchar(255),
+    constraint chck_phone1 CHECK(phone REGEXP '^[0-9]+$'),
+    constraint chck_dob1 CHECK(7<age<87),
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1;
 
-DROP TABLE IF EXISTS `users`;
 
-CREATE TABLE `users` (
-  `id` mediumint(8) unsigned NOT NULL auto_increment,
-  `name` varchar(255) default NULL,
-  `age` mediumint default NULL,
-  `gender` varchar(255) default NULL,
-  `email` varchar(255) default NULL,
-  `phone` varchar(100) default NULL,
-  `password` varchar(255),
-  PRIMARY KEY (`id`)
-) AUTO_INCREMENT=1;
-
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Jacob Burgess",31,"female","jacobburgess@yahoo.ca","8817418126","WFQ02BOC3UO"),
   ("Vincent Gamble",45,"male","vincentgamble7775@yahoo.com","1363526259","EBW83FSI7DC"),
@@ -231,7 +224,7 @@ VALUES
   ("Callum Case",24,"female","callumcase3942@hotmail.com","1117266471","UMI51SLF3BW"),
   ("Lois Parrish",37,"female","loisparrish322@google.ca","1841325619","YKR44MLE4QH"),
   ("Zeph Watts",23,"female","zephwatts4910@icloud.net","6256317771","BGO14ZNX7JH");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Darryl Owen",41,"male","darrylowen@google.org","2986548934","LUP97TEY7PG"),
   ("Nadine Reed",41,"male","nadinereed8337@protonmail.edu","1333045205","VAZ79NRV7YJ"),
@@ -243,7 +236,7 @@ VALUES
   ("Leigh Hopkins",31,"male","leighhopkins1620@protonmail.edu","1337671108","XDV20COR8QT"),
   ("Blossom Weeks",63,"male","blossomweeks@protonmail.edu","9256217742","RWJ45XEF1HO"),
   ("Cain Warren",25,"male","cainwarren6907@google.net","9472186793","FJN10YFR7KE");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Jonah Harrison",41,"female","jonahharrison6889@hotmail.edu","5163533061","HPH49VGL5AC"),
   ("Kim Garrison",24,"male","kimgarrison3317@yahoo.org","1195163462","WZB48FKJ4HO"),
@@ -255,7 +248,7 @@ VALUES
   ("Erin Osborn",17,"male","erinosborn3327@yahoo.org","2876666351","VUX23OZG3BW"),
   ("Indira Sheppard",27,"male","indirasheppard@outlook.edu","4457501517","MIB58ENB2SM"),
   ("Adara Wilkins",18,"male","adarawilkins830@yahoo.couk","9233027743","MMN55QIT8DO");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Alea Ashley",15,"female","aleaashley4598@hotmail.couk","5511557680","DRT45TVJ6EL"),
   ("Wesley Hall",82,"female","wesleyhall@google.com","9322517844","WED05LWG2WH"),
@@ -267,7 +260,7 @@ VALUES
   ("Catherine Mendoza",72,"male","catherinemendoza7342@outlook.ca","5205933569","YYK48ESA4GG"),
   ("Rana Walter",68,"male","ranawalter6156@yahoo.ca","8168154226","DIY11VPD6RB"),
   ("Seth Dillon",60,"female","sethdillon@outlook.ca","1615288752","SMJ21UXL5TS");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Zephania Gray",58,"female","zephaniagray@hotmail.ca","1781877264","PVW37NWF0NY"),
   ("Amena Bright",46,"male","amenabright@icloud.edu","2685367081","OIC37LZJ2QN"),
@@ -279,7 +272,7 @@ VALUES
   ("Nathaniel Paul",25,"male","nathanielpaul@protonmail.org","8635844150","GXR48HKI3OY"),
   ("Barclay Hart",39,"male","barclayhart@protonmail.ca","5528665568","NCN29EYP0LL"),
   ("Farrah Burns",30,"female","farrahburns9905@outlook.com","4256181159","YFB45OGB6AG");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Neil Simpson",52,"male","neilsimpson3693@icloud.couk","1178818174","QWG23MLW6XS"),
   ("Russell Flores",53,"male","russellflores@protonmail.edu","4291289079","PJV15MVQ4MU"),
@@ -291,7 +284,7 @@ VALUES
   ("Isaiah Stephens",49,"female","isaiahstephens@google.org","4631226459","HXK61ZYN2UI"),
   ("Nehru Beach",66,"male","nehrubeach9819@hotmail.ca","8739236212","IQY60GDG9HX"),
   ("Yeo Cantu",33,"female","yeocantu4412@outlook.edu","8408356124","BNE73LGV5OL");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Jason Herring",79,"female","jasonherring7516@outlook.org","2850357038","DVE76YIP2QK"),
   ("Veda Workman",34,"male","vedaworkman@hotmail.net","4276566466","UKL00WPI8EL"),
@@ -303,7 +296,7 @@ VALUES
   ("Ila Kane",12,"female","ilakane@protonmail.couk","6133822666","HNK73WUT0FX"),
   ("Felix Rogers",40,"female","felixrogers@protonmail.couk","7231633530","PYN76JHJ1ZC"),
   ("Liberty Le",24,"male","libertyle5475@yahoo.edu","5855154482","OUF29TGB5VR");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Lael Hobbs",21,"female","laelhobbs7452@yahoo.edu","8274554818","KLY22OBI4MO"),
   ("Jamal Blanchard",33,"male","jamalblanchard7875@icloud.com","8684217056","XZP69YBP4NB"),
@@ -315,7 +308,7 @@ VALUES
   ("Curran Buchanan",40,"female","curranbuchanan1735@protonmail.edu","0471723415","UXI78XSO1BD"),
   ("Callie Kelley",74,"female","calliekelley255@yahoo.org","2586265596","ZMQ77ARP6GY"),
   ("Daria Castillo",32,"female","dariacastillo@hotmail.org","9085654867","SIJ05LST4EC");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Perry Whitaker",78,"male","perrywhitaker1075@hotmail.couk","4237244884","KQB77YDE7EE"),
   ("Clinton Wilcox",52,"female","clintonwilcox2944@google.couk","8748243224","TJB64LNJ9SB"),
@@ -327,7 +320,7 @@ VALUES
   ("Georgia Gregory",44,"male","georgiagregory5341@aol.com","7568730569","LVO33MET9GK"),
   ("Driscoll Rush",74,"male","driscollrush6043@outlook.com","4433416380","UXV67GKB1LB"),
   ("Gary Buck",44,"female","garybuck6288@google.org","0772113842","ISH89XOW4JS");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Rachel Nunez",52,"male","rachelnunez9340@google.net","4657604464","MWN12MPY0MF"),
   ("Louis Benjamin",51,"male","louisbenjamin@aol.com","3855612384","RYF14YPF0EL"),
@@ -339,7 +332,7 @@ VALUES
   ("Joshua Glass",15,"male","joshuaglass@protonmail.com","1196862517","SRB25EHE7DW"),
   ("Dylan Eaton",43,"male","dylaneaton@aol.net","4764501612","MKP86SDI0DD"),
   ("Steven Nieves",32,"female","stevennieves@yahoo.couk","8264154516","ELI71NDJ3SD");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Zenia Sharpe",79,"male","zeniasharpe4263@protonmail.com","7670437585","TBF89PDV7CB"),
   ("Sonya Flynn",73,"female","sonyaflynn@google.edu","2441833201","RDJ74UHI8TH"),
@@ -351,7 +344,7 @@ VALUES
   ("Cheryl Holt",37,"male","cherylholt3298@outlook.net","8807648738","LAV10WIU7KT"),
   ("Brendan Benton",19,"male","brendanbenton7765@outlook.org","8001885879","JFI80EIR5YW"),
   ("Troy Webb",40,"female","troywebb741@aol.com","3551451372","MAE41GMJ0KL");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Henry Mcgee",86,"female","henrymcgee5683@aol.ca","7635043478","CFV74IKP5MW"),
   ("Reese Huff",18,"female","reesehuff2300@google.com","5015638277","QUA82REC1BO"),
@@ -363,7 +356,7 @@ VALUES
   ("Aquila Hooper",57,"male","aquilahooper@protonmail.couk","8486916748","DTL28KUI3DB"),
   ("Audrey Kirby",67,"male","audreykirby5048@google.couk","5453810742","QCZ64CXI6VO"),
   ("Drew Maxwell",20,"male","drewmaxwell9982@yahoo.com","6335285135","WOS11HVD2BP");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Brynn Cole",69,"male","brynncole8955@google.net","0787950742","IPO78VMG9IA"),
   ("Mark Lowery",32,"female","marklowery8170@outlook.com","7704318663","WXE17TGA9EX"),
@@ -375,7 +368,7 @@ VALUES
   ("Carl Shepard",54,"male","carlshepard@protonmail.ca","0075163871","DBP94FXX3OI"),
   ("Jeanette Kim",60,"male","jeanettekim@google.ca","4486635971","JJT81OQL0QO"),
   ("Quentin Meyers",82,"male","quentinmeyers5753@aol.org","8393088464","NYO52WJJ2AT");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("August Best",44,"female","augustbest3649@outlook.net","4052853247","JUP85UHY8MX"),
   ("Tucker Dunn",66,"female","tuckerdunn@hotmail.edu","6807053838","CIA22OIN4GW"),
@@ -387,7 +380,7 @@ VALUES
   ("Chelsea Lindsay",11,"female","chelsealindsay@protonmail.ca","1265678045","DQO23CUB8JG"),
   ("Dara Hardin",19,"female","darahardin@yahoo.ca","7751734416","ZCI48VFZ2ST"),
   ("Melvin Decker",28,"male","melvindecker6577@yahoo.org","5639419254","IYF39FNX2JP");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Mason Guthrie",49,"male","masonguthrie@protonmail.edu","2917413612","XGE37RCT6PE"),
   ("Jared Battle",80,"female","jaredbattle@protonmail.org","2665549264","KTQ85KRP5JH"),
@@ -399,7 +392,7 @@ VALUES
   ("Cassady Rosales",80,"female","cassadyrosales@google.org","8538768210","BWR41THN5PO"),
   ("Shana Silva",32,"male","shanasilva@yahoo.ca","4015578682","WXS27XAC2TN"),
   ("Victoria Harrison",49,"male","victoriaharrison@yahoo.org","4074739299","FKK26MEB9WN");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Graham Mcclure",81,"female","grahammcclure@outlook.org","8107857933","IPM89UMY6KG"),
   ("Melvin Frazier",27,"male","melvinfrazier@aol.edu","6262256361","EOJ38NYP4SX"),
@@ -411,7 +404,7 @@ VALUES
   ("Linda Herman",17,"female","lindaherman@outlook.edu","6439812350","MWS87PND6PQ"),
   ("Abra Wheeler",18,"male","abrawheeler@google.org","8642444574","SXY07NTE2TV"),
   ("August Hardin",51,"male","augusthardin@hotmail.net","3372698593","CMS51CUE7IY");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Serina Sargent",37,"female","serinasargent3264@aol.org","4548251502","HPZ13DLV3PI"),
   ("Leah Willis",16,"male","leahwillis@hotmail.com","1512988569","XPX44UTY7XD"),
@@ -423,7 +416,7 @@ VALUES
   ("Lois Buchanan",35,"male","loisbuchanan8533@aol.edu","1293283702","RKB86BJG2CM"),
   ("Pascale Harmon",49,"male","pascaleharmon@protonmail.org","7232349742","SYJ04JOC6DN"),
   ("Travis Dillard",28,"male","travisdillard669@icloud.com","8701331284","DVF32VBS2JD");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Mariko Hobbs",76,"male","marikohobbs@icloud.ca","5444163182","EMF27FCO1FP"),
   ("India Young",28,"male","indiayoung6647@google.edu","1907669775","RUS74FPH3NK"),
@@ -435,7 +428,7 @@ VALUES
   ("Leigh Yates",29,"male","leighyates5119@yahoo.ca","4458436633","MKB37BTX6KD"),
   ("Gray Mccall",49,"female","graymccall9064@aol.org","5553062908","HAH72UBE2NN"),
   ("Thomas Patterson",47,"male","thomaspatterson1792@aol.edu","4440434382","QIH16LQF7AE");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Imani Pearson",82,"female","imanipearson@icloud.net","7753049184","XYO18SSU2ML"),
   ("Mason Chavez",55,"female","masonchavez2311@google.com","4188123123","ITC63REC4DC"),
@@ -447,7 +440,7 @@ VALUES
   ("Malachi Mullen",24,"male","malachimullen6391@hotmail.net","3078576542","ZXQ18GHJ7TB"),
   ("Howard Wade",86,"female","howardwade7203@google.ca","4174152868","WSE45PSG2CI"),
   ("Macaulay Adkins",68,"male","macaulayadkins@google.net","6026851181","FRF54BCS7CA");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Cameron Tyson",82,"male","camerontyson555@icloud.com","6915454286","MJI21ENI8PI"),
   ("Chiquita Kaufman",57,"female","chiquitakaufman@protonmail.edu","7747327187","GWY34NVV3FY"),
@@ -459,7 +452,7 @@ VALUES
   ("Tamara Becker",20,"male","tamarabecker3989@aol.ca","8913272732","PWQ31NRG1TL"),
   ("Pascale Stein",49,"female","pascalestein@aol.net","9393053859","HBH36CLI7MX"),
   ("Mira Rivas",25,"male","mirarivas4346@yahoo.edu","7181881736","PUT13SBP4WT");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Rylee Fox",45,"male","ryleefox@aol.edu","3575714783","STE57DNY1NU"),
   ("Whitney Hancock",48,"male","whitneyhancock2695@outlook.edu","8535125888","QEP11DPD0DR"),
@@ -471,7 +464,7 @@ VALUES
   ("Malcolm Ford",44,"male","malcolmford6905@yahoo.ca","2486428087","NSW43MLF6SD"),
   ("Calista Ware",76,"male","calistaware@outlook.org","3513596928","VOH42KRR1YY"),
   ("Ava Pace",67,"male","avapace233@hotmail.org","6511149849","HEP66VCV1EB");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Kibo Hunt",41,"male","kibohunt@hotmail.ca","2734783188","BIL11QWT1UG"),
   ("Stacy Herrera",29,"female","stacyherrera3112@yahoo.couk","7282110732","YCD58UTA7EM"),
@@ -483,7 +476,7 @@ VALUES
   ("Baker Sampson",24,"female","bakersampson1383@yahoo.net","7695832830","ILP15AIB3RB"),
   ("Naomi Le",41,"male","naomile@google.net","9681656011","MCC89UCP3DS"),
   ("Abbot Nixon",70,"male","abbotnixon6737@google.edu","1778880592","GOS33RDV2JP");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Arthur Pace",62,"female","arthurpace@protonmail.org","6675721154","ZPX52QWU4DP"),
   ("Kenyon Combs",52,"male","kenyoncombs@protonmail.net","6382212135","ULS65WQY1WV"),
@@ -495,7 +488,7 @@ VALUES
   ("Edward Cline",36,"female","edwardcline@yahoo.com","9921987452","TES61XPO4DB"),
   ("Gage Griffin",52,"male","gagegriffin5610@hotmail.com","2645913134","EIZ47UCV8GB"),
   ("Blossom Bonner",63,"male","blossombonner@yahoo.couk","1535220376","GFS11CEY0II");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Knox Ferrell",84,"female","knoxferrell@protonmail.couk","1364028053","OQK17LXL6KW"),
   ("Robert Allen",12,"male","robertallen@outlook.org","9160847307","FQA83FGO4GM"),
@@ -507,7 +500,7 @@ VALUES
   ("Imelda Snow",30,"male","imeldasnow@icloud.couk","4173684060","JKQ29FRM3RT"),
   ("Scott Alvarado",85,"male","scottalvarado6769@google.edu","6528767372","XGL05OHN8AK"),
   ("Ruth Brennan",79,"male","ruthbrennan2004@aol.com","2056507697","GNJ00CQE7VB");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Cally Cohen",46,"female","callycohen@outlook.org","5742584396","RGR64YXN6YE"),
   ("Hayfa Goff",84,"female","hayfagoff6035@hotmail.net","6848786228","KBR20HDD0ZD"),
@@ -519,7 +512,7 @@ VALUES
   ("Fallon Prince",61,"male","fallonprince@aol.couk","7740021585","WKD15INB8NW"),
   ("Kieran Warner",12,"male","kieranwarner@google.ca","4726151350","GYT25WIT5QT"),
   ("Hadassah Gamble",77,"female","hadassahgamble1920@hotmail.edu","2493844918","FHH76KAQ3SF");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Hanna Barr",57,"male","hannabarr@protonmail.edu","7240773563","WCK94YJR8VC"),
   ("Josephine Reid",36,"male","josephinereid8502@hotmail.org","2637112387","EXU35WBX2KP"),
@@ -531,7 +524,7 @@ VALUES
   ("Laurel Bowers",31,"male","laurelbowers1924@aol.com","7457587415","HPG21NBP4UV"),
   ("Chancellor Gregory",25,"male","chancellorgregory8136@google.org","4748891636","WFT46TVO5MZ"),
   ("Mason Mcneil",45,"female","masonmcneil@hotmail.couk","8733895685","RSF34ZZM2BX");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Amber Walters",28,"female","amberwalters@outlook.ca","4389282627","MPZ16YWY3RE"),
   ("Driscoll English",40,"male","driscollenglish@hotmail.couk","7822465750","TMD91SBK3PP"),
@@ -543,7 +536,7 @@ VALUES
   ("Pearl Bray",44,"male","pearlbray@yahoo.org","3475225841","PSI76SLY1MX"),
   ("Cora Park",50,"male","corapark@hotmail.couk","8788808206","GXC86GHX5KH"),
   ("Raphael Guerrero",65,"male","raphaelguerrero821@protonmail.edu","2237761542","TMW82MFP4JU");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Norman Reilly",84,"female","normanreilly@aol.ca","5159314322","RXW26MPA8QV"),
   ("Keegan Beck",57,"female","keeganbeck@yahoo.net","7342609723","GUN46VEO8IJ"),
@@ -555,7 +548,7 @@ VALUES
   ("Juliet Harris",41,"female","julietharris4618@yahoo.edu","1932627540","XTP03GWG5XT"),
   ("Shaine Hunter",69,"female","shainehunter676@hotmail.couk","7248912322","SHB68VHH0LX"),
   ("Quamar Mckenzie",48,"female","quamarmckenzie@aol.ca","2682672473","FBB96IUB6QX");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Hedda Delgado",86,"female","heddadelgado287@yahoo.org","9191751488","LIG93BKG4RF"),
   ("Channing Stokes",67,"female","channingstokes8231@aol.com","6077298966","EFJ92PYZ2RM"),
@@ -567,7 +560,7 @@ VALUES
   ("Mannix Herring",81,"male","mannixherring6009@icloud.edu","8685274912","GKQ22EVK7DX"),
   ("Sylvia Harrell",22,"female","sylviaharrell8212@google.ca","6117507297","PDM99EPC5FY"),
   ("Steel Perry",57,"female","steelperry@hotmail.org","5043410604","YEF68QYO5IF");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Elijah Blair",82,"male","elijahblair9706@outlook.couk","5450527335","XNL32PRX3ZI"),
   ("Jacob Harding",64,"female","jacobharding737@yahoo.couk","2024446685","UMY66IJJ7EU"),
@@ -579,7 +572,7 @@ VALUES
   ("Fuller Snow",62,"male","fullersnow@protonmail.couk","5076217132","VOQ14EFM2QG"),
   ("Mechelle Suarez",78,"male","mechellesuarez@hotmail.edu","8600407608","QPH81ZDD5HD"),
   ("Rhona Stafford",68,"male","rhonastafford5874@google.edu","7756558739","NBO06PEE5FC");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Aline Ellison",39,"female","alineellison1589@hotmail.net","1346542462","UTJ76CMS0ST"),
   ("Channing Olson",83,"female","channingolson@icloud.edu","1362855248","MOV36OJF3IJ"),
@@ -591,7 +584,7 @@ VALUES
   ("Lavinia Horne",46,"female","laviniahorne6505@icloud.org","0133212616","KET00DHK4SD"),
   ("Christen Sharp",14,"female","christensharp8740@outlook.edu","1323501660","BBE97FMC6KV"),
   ("Jacqueline Pearson",35,"female","jacquelinepearson5277@google.ca","4596778432","REW19MOU1PC");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Priscilla Conner",18,"female","priscillaconner4813@google.edu","5312562051","RGW53PPR4BQ"),
   ("Magee Ray",53,"male","mageeray2819@outlook.couk","4647918459","BOI58ZDO1RE"),
@@ -603,7 +596,7 @@ VALUES
   ("Wynne Reyes",77,"male","wynnereyes@icloud.couk","5693118590","CKO69EIQ7JI"),
   ("Donna Sargent",27,"female","donnasargent7428@outlook.ca","0763281865","GOJ52QGF1DX"),
   ("Brady Gill",85,"male","bradygill8743@yahoo.edu","7240236646","KUF55MQV2ZV");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Lani Beasley",42,"female","lanibeasley8372@hotmail.net","6287417737","SBY13JRM9SD"),
   ("Abbot Copeland",43,"male","abbotcopeland366@hotmail.org","6312634650","YAQ55DCT2NM"),
@@ -615,7 +608,7 @@ VALUES
   ("Wang England",41,"male","wangengland5161@protonmail.couk","5683148044","VJN63OES1KY"),
   ("Finn Fitzgerald",75,"female","finnfitzgerald8418@google.com","0140310796","TDW55TQW5YF"),
   ("Dorian Byrd",78,"male","dorianbyrd@protonmail.net","6703677785","EXT79OGJ4ST");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Curran Ortiz",37,"male","curranortiz1853@aol.ca","1615946232","QQJ81KBX3UE"),
   ("Nissim Holden",74,"female","nissimholden6685@outlook.ca","2823323513","EJE18HYH8RI"),
@@ -627,7 +620,7 @@ VALUES
   ("Hilda Leach",67,"male","hildaleach@outlook.com","2388668872","AVJ36YIO6ZU"),
   ("Denton Gallegos",39,"female","dentongallegos6082@hotmail.net","0815342721","SLS11WBT3EB"),
   ("Shelly Smith",40,"male","shellysmith@google.com","1458323831","DVI51GDL5VR");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Oprah Foreman",87,"female","oprahforeman@google.org","4856153270","ILP62HGH9RR"),
   ("Nolan Burt",12,"female","nolanburt1320@icloud.couk","1808331788","UDW68OCU3UM"),
@@ -639,7 +632,7 @@ VALUES
   ("Abbot Baker",60,"female","abbotbaker7964@yahoo.net","6978166661","PQE16EEK0DQ"),
   ("Zeph Williamson",74,"male","zephwilliamson@aol.edu","9593887551","SJX72EFN9OB"),
   ("Arthur Bates",74,"female","arthurbates@aol.net","0128336863","YEM17WJC5SI");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Victor Cantrell",75,"female","victorcantrell@protonmail.com","5701433445","JYB33VKH0FM"),
   ("Abel Leach",23,"female","abelleach9522@google.net","4478514763","USU59LDB1VI"),
@@ -651,7 +644,7 @@ VALUES
   ("Tatum Lynch",38,"female","tatumlynch5500@outlook.net","3714845336","BFQ34BEI6WX"),
   ("Anthony Baker",34,"male","anthonybaker2446@google.edu","3218225261","DIH37WNZ0AO"),
   ("Jason Richmond",12,"female","jasonrichmond8940@outlook.net","0142933425","LHI94UFR1GM");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Rahim Odom",81,"male","rahimodom7885@google.edu","5887580243","GBF00RTC3LJ"),
   ("Samantha Paul",59,"male","samanthapaul@yahoo.couk","4804694222","FIB24SVY5KA"),
@@ -663,7 +656,7 @@ VALUES
   ("Audra Moon",12,"male","audramoon@aol.ca","4668482418","KEH24YQP1FV"),
   ("Naomi Horton",23,"female","naomihorton6221@aol.net","7839152824","DVF20JUO1FL"),
   ("Nelle Faulkner",74,"male","nellefaulkner8863@protonmail.net","1249142424","EXP94YXR5NV");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("David Hester",27,"male","davidhester9225@protonmail.ca","7773301147","UPG43VBX6MR"),
   ("Blake Cain",43,"male","blakecain@hotmail.ca","2212218231","ODQ50TDV0FZ"),
@@ -675,7 +668,7 @@ VALUES
   ("Zachary Meyer",13,"male","zacharymeyer@hotmail.ca","2263631526","BNG23MLM8SX"),
   ("Shafira Pittman",28,"male","shafirapittman@outlook.com","7677528214","FXC82LYF8SS"),
   ("Herrod Carrillo",19,"male","herrodcarrillo6233@protonmail.net","1794576540","UCC66UTA2AK");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Kay Spence",32,"male","kayspence@aol.ca","2200292287","KGO28SPX2IY"),
   ("Leonard Knox",27,"male","leonardknox@outlook.com","8082354348","DKM88OWU3OD"),
@@ -687,7 +680,7 @@ VALUES
   ("Marny Bradshaw",72,"female","marnybradshaw2365@aol.com","6718732238","NLM79PEJ0ME"),
   ("Brittany Wheeler",49,"male","brittanywheeler5631@protonmail.ca","1146355015","GCQ75QSC2IQ"),
   ("Wallace Gray",31,"female","wallacegray@yahoo.org","6173027463","AUJ86BSC3XK");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Reece Reilly",30,"female","reecereilly6962@google.com","6454766551","QKH13SYS4GZ"),
   ("Seth Hopkins",68,"female","sethhopkins9369@yahoo.edu","6237812276","GEY76IJP2CB"),
@@ -699,7 +692,7 @@ VALUES
   ("Deacon Roberson",40,"female","deaconroberson2691@google.com","8516380989","WPU55NIS8RB"),
   ("Germaine Harrison",44,"female","germaineharrison@google.org","0126047817","RUU49CIV1VS"),
   ("Zelenia Thompson",61,"male","zeleniathompson@outlook.couk","8147611415","DSI61JWC3JZ");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Yoshi Foreman",39,"male","yoshiforeman@icloud.net","1446750282","NGV67TMX0QI"),
   ("Jade Salas",23,"female","jadesalas@icloud.org","5415482276","GXS63USD4MJ"),
@@ -711,7 +704,7 @@ VALUES
   ("Kirestin Gutierrez",71,"female","kirestingutierrez3688@icloud.edu","6599837619","VHB56INX1LI"),
   ("Brynn Hughes",84,"female","brynnhughes@yahoo.ca","7327247001","MXZ21UDP3DP"),
   ("Kylynn Beasley",43,"male","kylynnbeasley@yahoo.couk","5285280713","CLX76WKZ8UW");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Kay Fernandez",85,"male","kayfernandez7924@google.org","9552305130","RKW17IEW2JX"),
   ("Francis Bryan",46,"male","francisbryan3764@outlook.edu","5838185332","GED74ICK2TK"),
@@ -723,7 +716,7 @@ VALUES
   ("Uriah Montoya",19,"female","uriahmontoya4216@hotmail.net","1335686205","IFX74QXA1LG"),
   ("Eric Horn",12,"female","erichorn@outlook.com","2956174202","OCN57UFL2GT"),
   ("Ginger Conley",34,"male","gingerconley@icloud.ca","9434258141","EHM68GFW2VF");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Orson Farmer",72,"male","orsonfarmer2911@hotmail.ca","2859150843","NBT07DTC8NV"),
   ("Tanek Nieves",72,"male","taneknieves@icloud.net","4845578794","GNJ88XCO0VY"),
@@ -735,7 +728,7 @@ VALUES
   ("Wylie Roach",33,"female","wylieroach7190@aol.couk","1742130065","TGU75GBI9NQ"),
   ("Paki Wynn",84,"female","pakiwynn3744@outlook.ca","7567835582","MYQ82DSB4VD"),
   ("Marvin Salas",64,"male","marvinsalas@protonmail.org","4571737338","CTT58RWP3PL");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Bertha Marshall",55,"male","berthamarshall2613@outlook.org","8775751895","UJN85DXW1MO"),
   ("Wynter Walker",84,"female","wynterwalker@hotmail.com","4233667976","HXJ80QVO6ZS"),
@@ -747,7 +740,7 @@ VALUES
   ("Kenneth Martinez",25,"male","kennethmartinez9262@google.net","3861052352","CEO67FSU2US"),
   ("Selma Raymond",83,"male","selmaraymond@google.net","5073744564","AIU20XOZ0WU"),
   ("Prescott Hurley",45,"male","prescotthurley6915@hotmail.net","4122107348","REH35UOQ8XZ");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Paloma Terry",12,"male","palomaterry@yahoo.com","6083493257","AJG41TBV2ZR"),
   ("Vladimir Horn",64,"female","vladimirhorn@outlook.net","2407054053","BBG81UEV3RQ"),
@@ -759,7 +752,7 @@ VALUES
   ("Melvin Garcia",35,"female","melvingarcia5799@icloud.net","8513377514","WQC02CYR8TO"),
   ("Bradley Watts",43,"male","bradleywatts@hotmail.couk","8109336853","GJF22QUJ5WR"),
   ("Bruce White",46,"male","brucewhite9105@yahoo.com","8168331852","RJF45WOQ8NV");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Savannah Lowery",40,"female","savannahlowery3898@icloud.com","7674832015","VOA05PPC1WV"),
   ("Rashad Beck",28,"female","rashadbeck@icloud.ca","4624454353","XXL28BVH4BU"),
@@ -771,7 +764,7 @@ VALUES
   ("Ivana Peck",25,"female","ivanapeck@protonmail.com","1172191317","KUJ37DWD1HL"),
   ("Mercedes Lowery",78,"male","mercedeslowery@protonmail.net","1394767528","MPM75PIM8SC"),
   ("Lael Durham",63,"female","laeldurham1995@google.net","8322642461","DBM52RVI3QH");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Hayes Kim",65,"female","hayeskim9486@protonmail.com","4544767167","SBL04USK5DA"),
   ("Azalia Nguyen",22,"male","azalianguyen@yahoo.ca","4587335476","CPK36RKQ8EM"),
@@ -783,7 +776,7 @@ VALUES
   ("Joel Bryan",79,"male","joelbryan3092@outlook.net","9753471598","HUV28MUT4FV"),
   ("Amal Langley",20,"female","amallangley@outlook.ca","5221857736","DXW25LSI1TS"),
   ("Darryl Cain",79,"female","darrylcain1643@aol.ca","5128397793","QLE54KNY4RS");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Destiny Woodward",41,"male","destinywoodward7835@yahoo.ca","9911044011","YYW28URX8EO"),
   ("Phoebe Hatfield",23,"female","phoebehatfield4213@yahoo.couk","9842914488","DPG14EXT4JQ"),
@@ -795,7 +788,7 @@ VALUES
   ("Burke Cobb",71,"male","burkecobb4833@outlook.org","7743221063","PRS67CZD5FM"),
   ("Dacey Allison",31,"male","daceyallison@google.org","3928537136","XYS51MQE2RY"),
   ("Richard Jacobs",36,"female","richardjacobs@protonmail.org","2143277837","TLK14NQE5XU");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Cole Mcgee",74,"male","colemcgee9056@aol.edu","3947821385","PUF50VNV5SJ"),
   ("Jelani Mclaughlin",81,"female","jelanimclaughlin@hotmail.edu","8667113851","WMW78YOS6UU"),
@@ -807,7 +800,7 @@ VALUES
   ("Kirestin Ramos",77,"female","kirestinramos@hotmail.org","5384367774","GKY13TQB8WX"),
   ("Shoshana Wilcox",60,"female","shoshanawilcox@icloud.net","8258721647","IZD45XNV6HT"),
   ("Ali Savage",15,"female","alisavage9391@icloud.edu","2048365203","HTW38XUM6GX");
-INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
+INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`upassword`)
 VALUES
   ("Renee Doyle",68,"male","reneedoyle@google.edu","3297934574","WOR03SWJ7OV"),
   ("Raymond Hoover",22,"female","raymondhoover@hotmail.org","0578479125","BRP34VPI2QP"),
@@ -901,7 +894,7 @@ values
 
 create table payment_methods (
   p_methodID mediumint(8) NOT NULL auto_increment,
-  method varchar(255) NOT NULL unique,
+  method varchar(255) not null,
   PRIMARY KEY(p_methodID)
 ) AUTO_INCREMENT = 1;
 
