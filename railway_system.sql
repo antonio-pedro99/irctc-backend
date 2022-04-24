@@ -14,130 +14,184 @@ CREATE TABLE passengers (
 
 CREATE TABLE stations (
   `id` mediumint(8) unsigned NOT NULL auto_increment,
-  `location` varchar(255) not null,
+  `city` varchar(255) not null,
+  `name` VARCHAR(255) NOT NULL,
+  `code` VARCHAR(255) NOT NULL UNIQUE,
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1;
 
-INSERT INTO stations (`location`)
+INSERT INTO stations (`city`,`name`,`code`)
 VALUES
-  ("Bhilai"),
-  ("Kohima"),
-  ("Chandigarh"),
-  ("Fatehpur"),
-  ("Jamshedpur"),
-  ("Haridwar"),
-  ("Murwara"),
-  ("Rawalpindi"),
-  ("Mango"),
-  ("Jammu");
-INSERT INTO stations (`location`)
+  ("Bhilai","North Bhilai","NBL"),
+  ("Kohima","North Kohima","NKM"),
+  ("Chandigarh","North Chandigarh","NCH"),
+  ("Fatehpur","North Fatehpur","NFP"),
+  ("Jamshedpur","North Jamshedpur","NJP"),
+  ("Rawalpindi","North Rawalpindi","NPD"),
+  ("Mango","North Mango","NMG"),
+  ("Jammu","North Jammu","NJU");
+INSERT INTO stations (`city`,`name`,`code`)
 VALUES
-  ("Bankura"),
-  ("Meerut Cantonment"),
-  ("Gurgaon"),
-  ("Porbandar"),
-  ("Guwahati"),
-  ("Gangtok"),
-  ("Panjim"),
-  ("Port Blair"),
-  ("North Barrackpur"),
-  ("Panjim");
-INSERT INTO stations (`location`)
+  ("Bankura","North Bankura","NBN"),
+  ("Meerut Cantonment","North Meerut","NMT"),
+  ("Gurgaon","North Gurgaon","NGN"),
+  ("Porbandar","North Porbandar","NPR"),
+  ("Guwahati","North Guwahati","NGT"),
+  ("Gangtok","North Gangtok","NGK"),
+  ("Panjim","North Panjim","NPM"),
+  ("Port Blair","North Port Blair","NPB"),
+  ("Barrackpur","North Barrackpur","NBK");
+INSERT INTO stations (`city`,`name`,`code`)
 VALUES
-  ("Agartala"),
-  ("Delhi"),
-  ("Port Blair"),
-  ("Pondicherry"),
-  ("Godhra"),
-  ("Jamnagar"),
-  ("Chandrapur"),
-  ("Srinagar"),
-  ("Silvassa"),
-  ("Delhi");
-INSERT INTO stations (`location`)
+  ("Agartala","North Agartala","NAL"),
+  ("Delhi","North Delhi","NDL"),
+  ("Pondicherry","North Pondicherry","NPC"),
+  ("Godhra","North Godra","NGO"),
+  ("Jamnagar","North Jamnagar","NJG"),
+  ("Chandrapur","North Chandrapur","NCP"),
+  ("Srinagar","North Srinagar","NSG");
+INSERT INTO stations (`city`,`name`,`code`)
 VALUES
-  ("Bulandshahr"),
-  ("Uttarpara-Kotrung"),
-  ("Delhi"),
-  ("Gangtok"),
-  ("Kavaratti"),
-  ("Silvassa"),
-  ("Nagaon"),
-  ("Warangal"),
-  ("Silvassa"),
-  ("Shimla");
-INSERT INTO stations (`location`)
+  ("Bulandshahr","North Bulandshahr","NBR"),
+  ("Uttarpara-Kotrung","North Uttarapara","NUK"),
+  ("Kavaratti","North Kavaratti","NK"),
+  ("Silvassa","North Silvassa","NSA"),
+  ("Nagaon","North Nagao","NNG"),
+  ("Warangal","North Warangal","NWL"),
+  ("Shimla","North Shimla","NSH");
+INSERT INTO stations (`city`,`name`,`code`)
 VALUES
-  ("Bhimavaram"),
-  ("Morvi"),
-  ("Damoh"),
-  ("Imphal"),
-  ("Muridke"),
-  ("Bhubaneswar"),
-  ("Palayankottai"),
-  ("Shimla"),
-  ("Daman"),
-  ("Nizamabad");
-INSERT INTO stations (`location`)
+  ("Bhimavaram","North Bhimavaram","NBV"),
+  ("Morvi","North Morvi","NMV"),
+  ("Damoh","North Damoh","NDO"),
+  ("Muridke","North Muridke","NMK"),
+  ("Bhubaneswar","North Bhubaneswar","NBS"),
+  ("Palayankottai","North Palayankottai","NPT"),
+  ("Nizamabad","North Nizamabad","NNZ");
+INSERT INTO stations (`city`,`name`,`code`)
 VALUES
-  ("Orai"),
-  ("Gangtok"),
-  ("Silvassa"),
-  ("Pondicherry"),
-  ("Karnal"),
-  ("Gangtok"),
-  ("Srinagar"),
-  ("Itanagar"),
-  ("Multan"),
-  ("Imphal");
-INSERT INTO stations (`location`)
+  ("Orai","North Orai","NOR"),
+  ("Karnal","North Karnal","NKL"),
+  ("Itanagar","North Itanagar","NIT"),
+  ("Multan","North Multan","NML");
+INSERT INTO stations (`city`,`name`,`code`)
 VALUES
-  ("Aizwal"),
-  ("Silchar"),
-  ("Gangtok"),
-  ("Cuttack"),
-  ("Tonk"),
-  ("Porbandar"),
-  ("Brahmapur"),
-  ("Itanagar"),
-  ("Palakkad"),
-  ("Allappuzha");
-INSERT INTO stations (`location`)
+  ("Aizwal","North Aizwal","NAZ"),
+  ("Silchar","North Silchar","NSR"),
+  ("Cuttack","North Cuttack","NCT"),
+  ("Tonk","North Tonk","NTK"),
+  ("Brahmapur","North Brahmapur","NBP"),
+  ("Palakkad","North Palakkad","NPK"),
+  ("Allappuzha","North Allappuzha","NAP");
+INSERT INTO stations (`city`,`name`,`code`)
 VALUES
-  ("Pondicherry"),
-  ("Srinagar"),
-  ("Raipur"),
-  ("Bokaro Steel City"),
-  ("Palakkad"),
-  ("Kohima"),
-  ("Rajahmundry"),
-  ("Port Blair"),
-  ("Srinagar"),
-  ("Kota");
-INSERT INTO stations (`location`)
+  ("Raipur","North Raipur","NRP"),
+  ("Bokaro Steel City","North Bokaro","NBC"),
+  ("Rajahmundry","North Rajahmundry","NRM"),
+  ("Kota","North Kota","NKO");
+INSERT INTO stations (`city`,`name`,`code`)
 VALUES
-  ("Rampur"),
-  ("Daman"),
-  ("Gangtok"),
-  ("Bhuj"),
-  ("Shillong"),
-  ("Darbhanga"),
-  ("Srinagar"),
-  ("Murwara"),
-  ("Srinagar"),
-  ("Haridwar");
-INSERT INTO stations (`location`)
+  ("Rampur","North Rampur","NRR"),
+  ("Daman","North Daman","NDM"),
+  ("Bhuj","North Bhuj","NBJ"),
+  ("Shillong","North Shillong","NSL"),
+  ("Darbhanga","North Darbhanga","NDB"),
+  ("Murwara","North Murwara","NMW"),
+  ("Haridwar","North Haridwar","NHR");
+INSERT INTO stations (`city`,`name`,`code`)
 VALUES
-  ("Pak Pattan"),
-  ("Daman"),
-  ("Gangtok"),
-  ("Ramagundam"),
-  ("Shimla"),
-  ("Gudivada"),
-  ("Imphal"),
-  ("Brahmapur"),
-  ("Shillong"),
-  ("Ranchi");
+  ("Pak Pattan","North Pak Pattan","NPP"),
+  ("Ramagundam","North Ramagundam","NRG"),
+  ("Gudivada","North Gudivada","NGD"),
+  ("Imphal","North Imphal","NIM"),
+  ("Ranchi","North Ranchi","NRA");
+  
+  ####################
+INSERT INTO stations (`city`,`name`,`code`)
+VALUES
+  ("Bhilai","South Bhilai","SBL"),
+  ("Kohima","South Kohima","SKM"),
+  ("Chandigarh","South Chandigarh","SCH"),
+  ("Fatehpur","South Fatehpur","SFP"),
+  ("Jamshedpur","South Jamshedpur","SJP"),
+  ("Rawalpindi","South Rawalpindi","SPD"),
+  ("Mango","South Mango","SMG"),
+  ("Jammu","South Jammu","SJU");
+INSERT INTO stations (`city`,`name`,`code`)
+VALUES
+  ("Bankura","South Bankura","SBN"),
+  ("Meerut Cantonment","South Meerut","SMT"),
+  ("Gurgaon","South Gurgaon","SGN"),
+  ("Porbandar","South Porbandar","SPR"),
+  ("Guwahati","South Guwahati","SGT"),
+  ("Gangtok","South Gangtok","SGK"),
+  ("Panjim","South Panjim","SPM"),
+  ("Port Blair","South Port Blair","SPB"),
+  ("Barrackpur","South Barrackpur","SBK");
+INSERT INTO stations (`city`,`name`,`code`)
+VALUES
+  ("Agartala","South Agartala","SAL"),
+  ("Delhi","South Delhi","SDL"),
+  ("Pondicherry","South Pondicherry","SPC"),
+  ("Godhra","South Godra","SGO"),
+  ("Jamnagar","South Jamnagar","SJG"),
+  ("Chandrapur","South Chandrapur","SCP"),
+  ("Srinagar","South Srinagar","SSG");
+INSERT INTO stations (`city`,`name`,`code`)
+VALUES
+  ("Bulandshahr","South Bulandshahr","SBR"),
+  ("Uttarpara-Kotrung","South Uttarapara","SUK"),
+  ("Kavaratti","South Kavaratti","SK"),
+  ("Silvassa","South Silvassa","SSA"),
+  ("Nagaon","South Nagao","SNG"),
+  ("Warangal","South Warangal","SWL"),
+  ("Shimla","South Shimla","SSH");
+INSERT INTO stations (`city`,`name`,`code`)
+VALUES
+  ("Bhimavaram","South Bhimavaram","SBV"),
+  ("Morvi","South Morvi","SMV"),
+  ("Damoh","South Damoh","SDO"),
+  ("Muridke","South Muridke","SMK"),
+  ("Bhubaneswar","South Bhubaneswar","SBS"),
+  ("Palayankottai","South Palayankottai","SPT"),
+  ("Nizamabad","South Nizamabad","SNZ");
+INSERT INTO stations (`city`,`name`,`code`)
+VALUES
+  ("Orai","South Orai","SOR"),
+  ("Karnal","South Karnal","SKL"),
+  ("Itanagar","South Itanagar","SIT"),
+  ("Multan","South Multan","SML");
+INSERT INTO stations (`city`,`name`,`code`)
+VALUES
+  ("Aizwal","South Aizwal","SAZ"),
+  ("Silchar","South Silchar","SSR"),
+  ("Cuttack","South Cuttack","SCT"),
+  ("Tonk","South Tonk","STK"),
+  ("Brahmapur","South Brahmapur","SBP"),
+  ("Palakkad","South Palakkad","SPK"),
+  ("Allappuzha","South Allappuzha","SAP");
+INSERT INTO stations (`city`,`name`,`code`)
+VALUES
+  ("Raipur","South Raipur","SRP"),
+  ("Bokaro Steel City","South Bokaro","SBC"),
+  ("Rajahmundry","South Rajahmundry","SRM"),
+  ("Kota","South Kota","SKO");
+INSERT INTO stations (`city`,`name`,`code`)
+VALUES
+  ("Rampur","South Rampur","SRR"),
+  ("Daman","South Daman","SDM"),
+  ("Bhuj","South Bhuj","SBJ"),
+  ("Shillong","South Shillong","SSL"),
+  ("Darbhanga","South Darbhanga","SDB"),
+  ("Murwara","South Murwara","SMW"),
+  ("Haridwar","South Haridwar","SHR");
+INSERT INTO stations (`city`,`name`,`code`)
+VALUES
+  ("Pak Pattan","South Pak Pattan","SPP"),
+  ("Ramagundam","South Ramagundam","SRG"),
+  ("Gudivada","South Gudivada","SGD"),
+  ("Imphal","South Imphal","SIM"),
+  ("Ranchi","South Ranchi","SRA");
 
 CREATE TABLE users (
 	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,

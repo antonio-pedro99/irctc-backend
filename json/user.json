@@ -1,0 +1,73 @@
+{
+  "id": 1,
+  "name": "Jacob Burgess",
+  "age": 31,
+  "gender": "female",
+  "email": "jacobburgess@yahoo.ca",
+  "phone": "8817418126",
+  "password": "WFQ02BOC3UO",
+  "tickets": [
+    {
+      "ticket_id": 1,
+      "payment_id": 1,
+      "seat_number": 68,
+      "trip": {
+        "trip_id": 1,
+        "train_id": 18,
+        "duration": 0,
+        "route": [
+          {
+            "routeID": 1,
+            "location": {
+              "id": 1,
+              "city": "Bhilai",
+              "name": "North Bhilai",
+              "code": "NBL"
+            },
+            "final_destination": {
+              "id": 4,
+              "city": "Fatehpur",
+              "name": "North Fatehpur",
+              "code": "NFP"
+            },
+            "price": 689
+          }
+        ],
+        "stops": [
+          {
+            "trip_id": 0,
+            "train_id": 0,
+            "duration": 0,
+            "route": [
+              {
+                "routeID": 0,
+                "location": {
+                  "id": 0,
+                  "city": "",
+                  "name": "",
+                  "code": ""
+                },
+                "final_destination": {
+                  "id": 0,
+                  "city": "",
+                  "name": "",
+                  "code": ""
+                },
+                "price": 689
+              }
+            ],
+            "stops": [],
+            "date_departure": "2022-11-17T02:41:06",
+            "date_arrival": "2022-11-20T01:00:20",
+            "time_departure": "02:41",
+            "time_arrival": "00:20"
+          }
+        ],
+        "date_departure": "2022-11-17T02:41:06",
+        "date_arrival": "2022-11-20T01:00:20",
+        "time_departure": "02:41",
+        "time_arrival": "00:20"
+      }
+    }
+  ]
+}
