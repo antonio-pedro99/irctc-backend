@@ -9,7 +9,8 @@ CREATE TABLE passengers (
     `email` VARCHAR(255) NOT NULL UNIQUE,
     `phone` VARCHAR(100) NOT NULL UNIQUE,
     `age` MEDIUMINT NOT NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    INDEX(id, name)
 )  AUTO_INCREMENT=1;
 
 CREATE TABLE stations (
@@ -17,7 +18,8 @@ CREATE TABLE stations (
   `city` varchar(255) not null,
   `name` VARCHAR(255) NOT NULL,
   `code` VARCHAR(255) NOT NULL UNIQUE,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX(id, city, code)
 ) AUTO_INCREMENT=1;
 
 INSERT INTO stations (`city`,`name`,`code`)
@@ -872,7 +874,8 @@ create table routes (
     price  float not null,
     PRIMARY KEY(routeID),
     FOREIGN KEY(location) REFERENCES stations(id),
-    FOREIGN KEY(final_destination) REFERENCES stations(id)
+    FOREIGN KEY(final_destination) REFERENCES stations(id),
+    INDEX(routeID, location, final_destination)
 ) AUTO_INCREMENT = 1;
 
 insert into routes(location, final_destination, price) 
@@ -887,7 +890,8 @@ create table trips (
   dt_arrival datetime not null,
   PRIMARY KEY(trip_id),
   FOREIGN KEY(train_id) REFERENCES trains(id),
-  FOREIGN KEY(routeID) REFERENCES routes(routeID)
+  FOREIGN KEY(routeID) REFERENCES routes(routeID),
+  INDEX(routeID, trip_id)
 ) AUTO_INCREMENT = 1;
 
 insert into trips(train_id, routeID, dt_departure, dt_arrival) 
@@ -930,7 +934,8 @@ create table tickets (
   FOREIGN KEY(payment_id) REFERENCES payments(paymentID),
   FOREIGN KEY( passenger_id) REFERENCES passengers(id),
   FOREIGN KEY( trip_id) REFERENCES trips(trip_id),
-  FOREIGN KEY(seat_number) REFERENCES seats(seat_number)
+  FOREIGN KEY(seat_number) REFERENCES seats(seat_number),
+  INDEX(ticket_id, trip_id, passenger_id)
 ) AUTO_INCREMENT = 1;
 
 insert into tickets (payment_id, passenger_id , trip_id, seat_number)
