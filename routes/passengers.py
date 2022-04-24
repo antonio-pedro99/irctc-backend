@@ -15,7 +15,7 @@ def get_passengers():
 @passenger_route.get("/trips")
 def get_trips(location_from:str, location_to:Optional[str]):
 
-    #run raw sql queries with python variables
+    #run raw sql queries with python varialble
     query = sqlalchemy.text("""
         SELECT
             *

@@ -14,4 +14,5 @@ def get_user(id:int):
 
 @user_route.post("/users/")
 def create_user(user:UserIn):
-    return {"hello":"wrld"}
+    print(user.name)
+    return {"hello":user.name}
