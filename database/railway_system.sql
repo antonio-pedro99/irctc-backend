@@ -48,7 +48,6 @@ CREATE TABLE trains (
 ) AUTO_INCREMENT=1;
 
 
-
 create table seats (
 	seat_number  mediumint(8) NOT NULL,
     train_id mediumint(8) unsigned NOT NULL,
@@ -107,59 +106,7 @@ create table tickets (
 ) AUTO_INCREMENT = 1;
 
 
-## creating all triggers
-
-## Trigger 1 - select the seat for a trip
-
-## trigger 2 - Calculate date difference and set duration for a trip
-
-
-create  view available_trips as SELECT 
-    LOCATION.city AS location_from,
-    LOCATION.name AS local_metrostation,
-    LOCATION.code AS location_code,
-	DESTINATION.city AS destination_to,
-    DESTINATION.name AS destination_metrostation,
-    DESTINATION.code AS destination_code,
-    R.price,
-    TRIP.trip_id,
-    TRIP.dt_departure,
-    TRIP.duration,
-    TRIP.train_id,
-    TRIP.dt_arrival
-FROM
-    stations AS LOCATION
-        INNER JOIN
-    routes AS R ON LOCATION.id = R.location
-        INNER JOIN
-    trips AS TRIP ON TRIP.routeID = R.routeID
-        INNER JOIN
-    stations AS DESTINATION ON R.final_destination = DESTINATION.id
-        AND DATEDIFF(TRIP.dt_departure, NOW()) >= 0;
-
-drop view available_trips;
-select * from available_trips;
-
-
-
-
-DELIMITER $$
-	create trigger calculate_duration_trigger before insert on trips for each row
-    begin
-		
-    end;
-$$
-	
-    
-    
-#declare @StartDate datetime, @EndDate datetime
-#select @StartDate = '10/01/2012 08:40:18.000',@EndDate='10/04/2012 09:52:48.000'
-#select convert(varchar(5),DateDiff(s, @startDate, @EndDate)/3600)+':'+convert(varchar(5),DateDiff(s, @startDate, @EndDate)%3600/60)+':'+convert(varchar(5),(DateDiff(s, @startDate, @EndDate)%60)) as [hh:mm:ss];
-
-
-
 ## inserting data
-
 INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
 VALUES
   ("Jacob Burgess",31,"female","jacobburgess@yahoo.ca","8817418126","WFQ02BOC3UO"),
