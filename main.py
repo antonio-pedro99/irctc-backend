@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
 from config.db import database
-from config import db
 from routes.passengers import passenger_route
+from routes.auth import auth_route
 from routes.users import user_route
-from models.users import users
+from routes.trips import trip_route
+from routes.tickets import ticket_route
 
 app = FastAPI()
 app.add_middleware(
@@ -16,7 +16,9 @@ app.add_middleware(
 
 app.include_router(passenger_route)
 app.include_router(user_route)
-
+app.include_router(auth_route)
+app.include_router(trip_route)
+app.include_router(ticket_route)
 
 @app.on_event("startup")
 async def startup():

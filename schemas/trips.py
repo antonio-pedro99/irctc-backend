@@ -14,19 +14,17 @@ class TripBase(BaseModel):
 class TripCreate(TripBase):
     train_id: int
     route_id:int
+    
    
 
-# Properties to receive on item update
-class TripUpdate(TripBase):
-    route:List[str]
-    stops:List[str]
+
 
 # Properties shared by models stored in DB
 class TripInDBBase(TripBase):
     trip_id: int
     train_id:int
     route_id:int
-    duration: int
+    duration: Optional[int]
     class Config:
         orm_mode = True
 
@@ -36,9 +34,12 @@ class Stop(TripInDBBase):
 # Properties to return to client
 class Trip(TripInDBBase):
     routes: List[Route]
-    stops:List[Stop]
-    pass
+   # stops:List[Stop]
 
+# Properties to receive on item update
+class TripUpdate(TripBase):
+    route:List[Route]
+    stops:List[Stop]
 
 # Properties properties stored in DB
 class ItemInDB(TripInDBBase):

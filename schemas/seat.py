@@ -1,11 +1,8 @@
 from pydantic import BaseModel
 
-
-
 # Shared properties
 class SeatBase(BaseModel):
     seat_number:int
-    train_id:int
     s_status:bool
 
 # Properties to receive on Seat creation
@@ -18,7 +15,7 @@ class SeatUpdate(SeatBase):
 
 # Properties shared by models stored in DB
 class SeatInDBBase(SeatBase):
-    pass
+    train_id:int
     class Config:
         orm_mode = True
 

@@ -6,7 +6,7 @@ payments = Table(
     "payments",
     meta,
     Column("paymentID", Integer, primary_key=True),
-    Column("p_method",String(255),ForeignKey("payment_methods.p_methodID")),
+    Column("p_methodID",String(255),ForeignKey("payment_methods.p_methodID")),
     Column("amount",Float),
     Column("date",)
 )

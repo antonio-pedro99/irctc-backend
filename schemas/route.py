@@ -1,9 +1,7 @@
 from cgi import print_exception
 from tokenize import Double
 from typing import List, Optional
-
 from pydantic import BaseModel
-
 from schemas.station import Station
 
 
@@ -29,8 +27,7 @@ class RouteInDBBase(RouteBase):
 
 
 # Properties to return to client
-class Route(RouteInDBBase):
-    routeID:int
+class Route(RouteBase):
     location: Station
     final_destination:Station
 

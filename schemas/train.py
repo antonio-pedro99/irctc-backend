@@ -1,4 +1,7 @@
+from typing import List
 from pydantic import BaseModel
+
+from schemas.seat import Seat
 
 # Shared properties
 class TrainBase(BaseModel):
@@ -21,7 +24,7 @@ class TrainInDBBase(TrainBase):
 
 # Properties to return to client
 class Train(TrainInDBBase):
-    pass
+    seats: List[Seat] = []
 
 # Properties properties stored in DB
 class TrainInDB(TrainInDBBase):

@@ -6,9 +6,10 @@ trips = Table(
     "trips",
     meta,
     Column("trip_id", Integer, primary_key=True),
-    ForeignKey("train_id", Integer,ForeignKey("trains.id")),
-    ForeignKey("route_id", Integer,ForeignKey("routes.routeID")),
+    Column("train_id", Integer,ForeignKey("trains.id")),
+    Column("routeID", Integer,ForeignKey("routes.routeID")),
     Column("dt_departure",DateTime),
+    Column("duration", DateTime),
     Column("dt_arrival",DateTime),
 )
 meta.create_all(engine)

@@ -11,6 +11,6 @@ users = Table(
     Column("phone", String(255)),
     Column("age", Integer),
     Column("gender",String(6)),
-    Column("upassword", String(255)),
+    Column("password", String(255)),
 )
 meta.create_all(engine)
