@@ -7,6 +7,5 @@ class Passenger(BaseModel):
     phone:str
     age:int
 
-
 class PassengerCreate(Passenger):
     id:int
