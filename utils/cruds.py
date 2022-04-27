@@ -1,4 +1,3 @@
-from fastapi import Query
 from sqlalchemy import text
 from config import db
 from models.stations import stations

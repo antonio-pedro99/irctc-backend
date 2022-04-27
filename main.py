@@ -6,7 +6,7 @@ from routes.auth import auth_route
 from routes.users import user_route
 from routes.trips import trip_route
 from routes.tickets import ticket_route
-
+from routes.razor_pay import razor_pay_api_fake
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -19,6 +19,7 @@ app.include_router(user_route)
 app.include_router(auth_route)
 app.include_router(trip_route)
 app.include_router(ticket_route)
+app.include_router(razor_pay_api_fake)
 
 @app.on_event("startup")
 async def startup():
