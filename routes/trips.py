@@ -1,7 +1,9 @@
+from optparse import Option
 from fastapi import APIRouter
 from typing import List, Optional
 
 import sqlalchemy
+from schemas.query import SearchQueryBase
 from schemas.train import *
 from schemas.seat import Seat
 from schemas.trips import Trip, TripCreate, TripUpdate
@@ -35,7 +37,10 @@ def get_train(id:int):
 
 @trip_route.get("/trips/{location}/to/{destination}", tags=["Trip"])
 def get_trip_by_location_to_destionation(location:str, destination:str):
-    query = text("select * from available_trips where location_from = '{0}' and destination_to = '{1}'".format(location, destination))
+    query = text("""select * from 
+        available_trips
+            where 
+        location_from = '{0}' and destination_to = '{1}'""".format(location, destination))
     return db.engine.execute(query).all()
 
 
