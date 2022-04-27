@@ -8,8 +8,6 @@ DELIMITER //
     end;
 //
 
-select * from payments;
-select * from tickets;
 
 drop trigger if exists after_update_trip;
 delimiter //

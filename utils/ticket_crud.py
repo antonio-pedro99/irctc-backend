@@ -39,7 +39,7 @@ def create_user_ticket(ticket:TicketCreate):
     
     db.engine.execute(update_seat)
 
-    db.engine.execute(tickets.insert().values(passenger_id=ticket.passenger_id, payment_id=ticket.payment_id, trip_id = ticket.trip_id, seat_number = new_seat)).lastrowid
+    db.engine.execute(tickets.insert().values(passenger_id=ticket.passenger_id, payment_id=ticket.payment_id, trip_id = ticket.trip_id, seat_number = new_seat))
 
     return get_user_tickets(id=ticket.passenger_id)[-1]
 

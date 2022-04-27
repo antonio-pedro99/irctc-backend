@@ -20,14 +20,18 @@ def login(userLogin: UserLogin):
     raise HTTPException(status_code=400, detail= "user not found")
 
 
-@auth_route.post("/auth/register", tags=["auth"], response_model=User)
+@auth_route.post("/auth/register", tags=["auth"])
 def register(user:UserCreate):
     user_db = db.engine.execute(users.select().where(users.c.email == user.email)).first()
-
-    if not user_db:
-        id = db.engine.execute(users.insert().values(name=user.name, password=user.password, phone=user.phone, email=user.email)).lastrowid
-        return db.engine.execute(users.select().where(users.c.id == id)).first()
     
+    response = {
+        "sucess":0,
+    }
+    if not user_db:
+        db.engine.execute(users.insert().values(name=user.name, password=user.password, phone=user.phone, email=user.email)).lastrowid
+        response["sucess"] = 1;
+        return response
+    response["sucess"] = 0
     raise HTTPException(status_code=400, detail="user already exists")
 
 

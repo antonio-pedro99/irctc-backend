@@ -62,13 +62,5 @@ drop view if exists notifications_view;
             INNER JOIN
         booked_tickets AS T ON T.trip_id = N.sourceId;
 
-select * from notifications_view where passenger_id = 1;
-
-
- select * from booked_tickets where trip_id = 50;
- 
- update trips set dt_arrival = "2022-12-02 12:13:21" where trip_id = 50;
- 
- select * from trips where trip_id = 50;
  
  

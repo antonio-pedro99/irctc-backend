@@ -22,7 +22,7 @@ class UserCreate(UserBase):
 class UserUpdate(UserBase):
     gender:Optional[str]
     name:Optional[str]
-    age:Optional[str]
+    age:Optional[int]
     
 
 
