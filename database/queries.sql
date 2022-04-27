@@ -61,3 +61,74 @@ where R.location = 11 and R1.final_destination = 14);
 
 
 
+#create trip: location, final_destination
+
+
+select * from stations;
+
+SELECT 
+    *
+FROM
+    trips AS T1
+        INNER JOIN
+    trips AS T2 ON T1.routeID IN (SELECT 
+            routeID
+        FROM
+            routes AS R1
+        WHERE
+            R1.location IN (SELECT 
+                    id
+                FROM
+                    stations AS S1
+                WHERE
+                    S1.city = 'Gurgaon')
+                AND R1.final_destination IN (SELECT 
+                    id
+                FROM
+                    stations AS S1
+                WHERE
+                    S1.city = 'Shimla'))
+		and T2.routeID in (
+        select routeId from routes as R2 where R2.location in (select id from stations as S2 where S2.city = "Shimla"))
+        AND T1.train_id IN (SELECT 
+            train_id
+        FROM
+            seats AS S1
+        WHERE
+            S1.s_status = 0) 
+		And T2.train_id in (select train_id from seats as S2 where S2.s_status = 0);
+        
+        
+
+
+
+
+select  * from trips as T1
+WHERE
+    T1.routeID IN (SELECT 
+            routeID
+        FROM
+            routes AS R1
+        WHERE
+            R1.location IN (SELECT 
+                    id
+                FROM
+                    stations AS S1
+                WHERE
+                    S1.city = 'Gurgaon')
+                AND R1.final_destination IN (SELECT 
+                    id
+                FROM
+                    stations AS S1
+                WHERE
+                    S1.city = 'Shimla'))
+        AND T1.train_id IN (SELECT 
+            train_id
+        FROM
+            seats AS S1
+        WHERE
+            S1.s_status = 0);
+
+
+
+

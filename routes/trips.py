@@ -4,8 +4,9 @@ from typing import List, Optional
 import sqlalchemy
 from schemas.train import *
 from schemas.seat import Seat
-from schemas.trips import Trip, TripUpdate
-from utils.trips_crud import get_seat_by_train_id, get_train_by_id
+from schemas.trips import Trip, TripCreate, TripUpdate
+from utils.cruds import get_route_by_station, get_station_by_name
+from utils.trips_crud import create_trip, get_seat_by_train_id, get_train_by_id, get_trip_admin, get_trip_by_id, update_trip_details
 from config import db
 from sqlalchemy import text
 
@@ -38,43 +39,16 @@ def get_trip_by_location_to_destionation(location:str, destination:str):
     return db.engine.execute(query).all()
 
 
-@trip_route.put("/trips/", tags=["Trip"])
-def update_trip(trip:TripUpdate):
-    return {**trip}
+@trip_route.put("/trips/{id}", tags=["admin/Trip"])
+def update_trip(trip:TripUpdate, id:int):
+    update_trip_details(id=id,trip=trip )
+    return get_trip_by_id(id=id)
 
-@trip_route.get("admin/trips", tags=["admin"])
+@trip_route.get("admin/trips", tags=["admin/Trip"])
 def get_trips(location_from:Optional[str], location_to:str):
+   return get_trip_admin(location_from=location_from, location_to=location_to)
 
-    #run raw sql queries with python varialble
-    query = sqlalchemy.text("""
-        SELECT
-            *
-        FROM
-            trips AS T
-        WHERE
-            T.routeID IN (SELECT
-                    routeID
-                FROM
-                    routes AS R
-                WHERE
-                    R.location IN (SELECT
-                            id
-                        FROM
-                            stations AS S
-                        WHERE
-                            S.city = '{0}')
-                        AND R.final_destination IN (SELECT
-                            id
-                        FROM
-                            stations AS S
-                        WHERE
-                            S.city = '{1}'))
-                AND T.train_id IN (SELECT
-                    train_id
-                FROM
-                    seats AS S
-                WHERE
-                    S.s_status = 0);
-                    
-    """.format(location_from, location_to))
-    return db.engine.execute(query).all()
+
+@trip_route.post("/trips/new", tags=["admin/Trip"])
+def create_new_trip(trip:TripCreate):
+   return create_trip(trip=trip)

@@ -1,10 +1,14 @@
-from calendar import c
+from datetime import datetime
+from fastapi import HTTPException
+from sqlalchemy import text
 from config import db
 from models.trains import trains
 from models.seats import seats
 from models.trips import trips
 from models.routes import routes
 from models.stations import stations
+from schemas.trips import TripCreate, TripUpdate
+from utils.cruds import get_route_by_station
 
 def get_seat_by_train_id(id):
     return db.engine.execute(seats.select().where(seats.c.train_id  == id)).all()
@@ -16,13 +20,70 @@ def get_trip_by_id(id):
     return db.engine.execute(trips.select().where(trips.c.trip_id == id)).first()
 
 def get_route_by_id(id):
-    return db.engine.execute(routes.select().where(routes.routeID == id)).first()
+    return db.engine.execute(routes.select().where(routes.c.routeID == id)).first()
+
+
+def get_trip_by_routeID(id:int):
+    return db.engine.execute(trips.select().where(trips.c.routeID == id)).first()
 
 def get_station_by_id(id):
     return db.engine.execute(stations.select().where(stations.c.id == id))
 
-def create_trip():
-    pass
+def create_trip(trip:TripCreate):
+    route_id = get_route_by_station(location_name=trip.location_station, location_city=trip.location_city, final_destination_city=trip.final_destination_city, final_destination_name=trip.final_destination_station)["routeID"]
+    trip_db = {**get_trip_by_routeID(route_id)}
+    if trip_db:
+        if trip_db["dt_departure"] != trip.dt_departure:
+            inserted = db.engine.execute(trips.insert().values(train_id = trip.train_id, routeID= route_id, dt_departure= trip.dt_departure, dt_arrival= trip.dt_arrival)).lastrowid
+            return get_trip_by_id(id=inserted)
+    raise HTTPException(status_code=400, detail="can not add this trip")
 
-def update_trip(id:int):
-    pass
+def get_trip_admin(location_from:str, location_to:str):
+    query = text("""
+        SELECT
+            *
+        FROM
+            trips AS T
+        WHERE
+            T.routeID IN (SELECT
+                    routeID
+                FROM
+                    routes AS R
+                WHERE
+                    R.location IN (SELECT
+                            id
+                        FROM
+                            stations AS S
+                        WHERE
+                            S.city = '{0}')
+                        AND R.final_destination IN (SELECT
+                            id
+                        FROM
+                            stations AS S
+                        WHERE
+                            S.city = '{1}'))
+                AND T.train_id IN (SELECT
+                    train_id
+                FROM
+                    seats AS S
+                WHERE
+                    S.s_status = 0);
+                    
+    """.format(location_from, location_to))
+
+    return db.engine.execute(query).all()
+
+def update_trip_details(id:int, trip:TripUpdate):
+    trip_db = get_trip_by_id(id=id)
+    queries = []
+    if trip_db:
+        if trip.train_id:
+            queries.append(text("update trips set train_id = '{0}' where trip_id = '{1}'".format(trip.train_id, id)))
+        elif trip.dt_departure:
+            queries.append(text("update trips set dt_departure = '{0}' where trip_id = '{1}'".format(trip.dt_departure, id)))
+        elif trip.dt_arrival:
+            queries.append(text("update trips set dt_arrival = '{0}' where trip_id = '{1}'".format(trip.dt_arrival,id)))
+        elif trip.route_id:
+            queries.append( text("update trips set route_id = '{0}' where trip_id = '{1}'".format(trip.route_id, id)))
+        for query in queries:
+            db.engine.execute(query)
