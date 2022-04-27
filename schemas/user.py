@@ -21,7 +21,10 @@ class UserCreate(UserBase):
 
 # Properties to receive on item update
 class UserUpdate(UserBase):
-    pass
+    gender:Optional[str]
+    name:Optional[str]
+    age:Optional[str]
+    
 
 
 # Properties shared by models stored in DB
@@ -33,6 +36,8 @@ class UserInDBBase(UserBase):
     class Config:
         orm_mode = True
 
-
 class User(UserInDBBase):
+    pass
+
+class UserDetails(UserUpdate):
     pass

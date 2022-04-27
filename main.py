@@ -27,6 +27,3 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdwon():
     pass
-
-if __name__ == "__main__":
-    uvicorn.run(app, reload =True)

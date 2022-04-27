@@ -1,14 +1,62 @@
 ## creating all triggers
 
-## Trigger 1 - select the seat for a trip
 
-## trigger 2 - Calculate date difference and set duration for a trip
-
-
-
-DELIMITER $$
-	create trigger calculate_duration_trigger before insert on trips for each row
+DELIMITER //
+	create trigger create_ticket_after_insert_payment after insert on payments for each row
     begin
 		
     end;
-$$
+//
+
+select * from payments;
+select * from tickets;
+
+drop trigger if exists after_update_trip;
+delimiter //
+create trigger after_update_trip
+after update on railway_system.trips for each row
+ begin
+	declare msg varchar(255);
+    declare _type varchar(50);
+    declare title varchar(100);
+    declare date_now datetime;
+    
+    set date_now = (select Now());
+    if OLD.routeID != New.routeID then
+		set title = concat("Trip update: Route has changed");
+		set msg = concat("Your trip with ID  ", Old.trip_id, " has changed its route.");
+	elseif Old.dt_departure != New.dt_departure then
+		set title = concat("Trip update: schedule has been changed.");
+		set msg = concat("Your trip with ID  ", Old.trip_id, " has changed the departure schedule from ", OLD.dt_departure, " to", New.dt_departure);
+	elseif old.train_id != New.train_id then
+		set title = concat("Trip update: Train has changed");
+		set msg = concat("Your trip with ID  ", Old.trip_id, " has changed the train ", OLD.train_id, " to.", New.train_id);
+	elseif old.dt_arrival != new.dt_arrival then
+		if datediff(old.dt_arrival, old.dt_departure) > datediff(new.dt_arrival, old.dt_departure) then
+			set title = concat("Trip update: Ups! your trip might delay");
+			set msg = concat("It seems that your trip ", Old.trip_id, ",  is going to delay for ", datediff(old.dt_arrival, new.dt_departure), " days.");
+		else 
+			set title = concat("Trip update: Wow, your trip is arriving early.");
+			set msg = concat("It seems that your trip ", Old.trip_id, ",  is going to arrive early. It will take now ", datediff(new.dt_arrival, old.dt_departure), " days.");
+		end if;
+	end if;
+	insert into railway_system.notification_template(title, sourceId, createdAt, content) values(title, Old.trip_id, date_now, msg);    
+ end //
+ 
+ 
+ 
+ delimiter //
+create trigger after_update__ticket
+after insert on notification_template for each row follows after_update_trip
+ begin
+	declare msg varchar(255);
+    declare _type varchar(50);
+    declare date_now datetime;
+    set _type = "Trip change";
+    set date_now = (select Now());
+	set msg = concat("Your trip with number  ", Old.id, " changed the schedule from ", Old.date, " to ", New.date);
+	insert into test.notifications(userId,sourceType, updatedAt, content) values(Old.user_id, _type, date_now, msg);
+ end //
+
+
+ 

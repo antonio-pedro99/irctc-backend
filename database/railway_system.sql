@@ -3,6 +3,7 @@ create database if not exists railway_system;
 use railway_system;
 
 
+
 ## creating tables
 CREATE TABLE passengers (
     `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -17,6 +18,9 @@ CREATE TABLE passengers (
     constraint chck_dob CHECK(7<age<87)
 )  AUTO_INCREMENT=1;
 
+
+
+
 CREATE TABLE stations (
     `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
     `city` VARCHAR(255) NOT NULL,
@@ -30,10 +34,10 @@ CREATE TABLE stations (
 CREATE TABLE `users` (
 	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
-    `gender` varchar(255) not null,
+    `gender` varchar(255) not null default "male",
     `email` VARCHAR(255) NOT NULL UNIQUE,
     `phone` VARCHAR(10) NOT NULL UNIQUE,
-    `age` MEDIUMINT NOT NULL,
+    `age` MEDIUMINT NULL,
 	`password` varchar(255),
     constraint chck_phone1 CHECK(phone REGEXP '^[0-9]+$'),
     constraint chck_dob1 CHECK(7<age<87),
@@ -66,18 +70,22 @@ create table routes (
     FOREIGN KEY(final_destination) REFERENCES stations(id),
     INDEX(routeID, location, final_destination)
 ) AUTO_INCREMENT = 1;
-create table trips (
+
+
+create table trips  (
   trip_id mediumint(8) NOT NULL auto_increment,
   train_id mediumint(8) unsigned NOT NULL, 
   routeID  mediumint(8) NOT NULL,
   dt_departure datetime not null,
-  duration datetime null,
+  duration mediumint as  (timestampdiff(hour, dt_departure, dt_arrival)),
   dt_arrival datetime not null,
   PRIMARY KEY(trip_id),
   FOREIGN KEY(train_id) REFERENCES trains(id),
   FOREIGN KEY(routeID) REFERENCES routes(routeID),
   INDEX(routeID, trip_id)
 ) AUTO_INCREMENT = 1;
+
+
 create table payment_methods (
   p_methodID mediumint(8) NOT NULL auto_increment,
   method varchar(255) not null,
@@ -91,21 +99,52 @@ create table payments (
   PRIMARY KEY(paymentID ),
   FOREIGN KEY(p_methodID) REFERENCES payment_methods(p_methodID)
 ) AUTO_INCREMENT = 1;
+
+
 create table tickets (
   ticket_id  mediumint(8) NOT NULL auto_increment,
   payment_id mediumint(8)  NOT NULL,
   passenger_id   mediumint(8) unsigned not null,
   trip_id   mediumint(8) NOT NULL,
   seat_number  mediumint(8) NOT NULL,
+  t_status boolean not null default true,
   PRIMARY KEY(ticket_id),
   FOREIGN KEY(payment_id) REFERENCES payments(paymentID),
   FOREIGN KEY( passenger_id) REFERENCES passengers(id),
   FOREIGN KEY( trip_id) REFERENCES trips(trip_id),
   FOREIGN KEY(seat_number) REFERENCES seats(seat_number),
-  INDEX(ticket_id, trip_id, passenger_id)
+INDEX(ticket_id, trip_id, passenger_id)
 ) AUTO_INCREMENT = 1;
 
+CREATE TABLE `notification_template` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(100) NOT NULL,
+  `sourceId` mediumint(8) unsigned not null, 
+  `createdAt` DATETIME NOT NULL,
+  `content` TEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) );
+  
+  
 
+drop table if exists notifications;
+CREATE TABLE `notifications` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `userId`  MEDIUMINT(8) UNSIGNED NOT NULL,
+  `sourceId`  mediumint(8) NOT NULL,
+  `sourceType` VARCHAR(50) NOT NULL,
+  `type` SMALLINT(6) NOT NULL DEFAULT 0,
+  `read` TINYINT(1) NOT NULL DEFAULT 1,
+  `trash` TINYINT(1) NOT NULL DEFAULT 1,
+  `createdAt` DATETIME NOT NULL,
+  `content` TEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `idx_notification_user` (`userId` ASC),
+  CONSTRAINT `fk_notification_user`
+    FOREIGN KEY (`userId`)
+    REFERENCES `users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+    
 ## inserting data
 INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
 VALUES
@@ -938,10 +977,14 @@ insert into payments (p_methodID, amount, date)
 values  
 (1, 1000, '2022-07-25'),(1, 3000, '2022-03-10'),(1, 500, '2022-10-20'),(2, 3000, '2022-04-05'),(3, 1000, '2022-08-18'),(1, 1000, '2022-04-05'),(3, 1000, '2022-07-11'),(2, 500, '2022-05-05'),(2, 500, '2022-02-26'),(1, 3000, '2022-04-08'),(3, 3000, '2022-08-06'),(2, 1000, '2022-08-13'),(3, 1000, '2022-09-18'),(1, 1000, '2022-05-14'),(3, 1000, '2022-01-06'),(1, 3000, '2022-02-18'),(2, 3000, '2022-11-30'),(3, 1000, '2022-03-19'),(1, 3000, '2022-09-03'),(1, 1000, '2022-06-02'),(3, 500, '2022-08-07'),(2, 1000, '2022-11-04'),(3, 500, '2022-04-20'),(1, 500, '2022-08-22'),(3, 3000, '2022-07-11'),(1, 3000, '2022-06-21'),(2, 500, '2022-09-06'),(2, 1000, '2022-07-15'),(2, 3000, '2022-03-15'),(3, 500, '2022-07-14'),(1, 1000, '2022-09-25'),(2, 1000, '2022-08-17'),(3, 1000, '2022-03-25'),(2, 1000, '2022-09-20'),(2, 500, '2022-11-07'),(2, 500, '2022-09-15'),(2, 500, '2022-09-20'),(3, 1000, '2022-06-26'),(1, 500, '2022-05-07'),(3, 3000, '2022-12-14'),(1, 500, '2022-06-01'),(1, 1000, '2022-06-17'),(3, 1000, '2022-10-19'),(2, 3000, '2022-02-04'),(1, 1000, '2022-07-21'),(1, 500, '2022-08-01'),(3, 500, '2022-01-21'),(3, 500, '2022-06-19'),(1, 3000, '2022-05-14'),(3, 500, '2022-01-01'),(1, 1000, '2022-06-28'),(2, 1000, '2022-07-26'),(2, 3000, '2022-06-11'),(2, 3000, '2022-03-14'),(1, 1000, '2022-03-09'),(3, 1000, '2022-04-21'),(3, 1000, '2022-01-30'),(1, 500, '2022-07-05'),(1, 3000, '2022-08-27'),(2, 500, '2022-06-10'),(1, 500, '2022-10-25'),(2, 1000, '2022-08-23'),(2, 500, '2022-09-26'),(2, 3000, '2022-01-04'),(3, 1000, '2022-12-02'),(1, 3000, '2022-01-03'),(3, 500, '2022-11-07'),(2, 3000, '2022-07-15'),(2, 500, '2022-10-22'),(2, 3000, '2022-11-21'),(2, 1000, '2022-03-22'),(2, 500, '2022-03-15'),(1, 1000, '2022-06-16'),(3, 3000, '2022-05-11'),(1, 3000, '2022-01-01'),(2, 1000, '2022-10-03'),(3, 3000, '2022-12-13'),(1, 500, '2022-12-30'),(2, 500, '2022-08-27'),(2, 500, '2022-02-01'),(3, 500, '2022-08-21'),(3, 3000, '2022-03-16'),(2, 500, '2022-04-11'),(3, 3000, '2022-09-24'),(1, 500, '2022-01-11'),(2, 3000, '2022-04-11'),(3, 3000, '2022-07-15'),(3, 500, '2022-11-09'),(1, 1000, '2022-08-23'),(1, 500, '2022-07-17'),(3, 3000, '2022-03-30'),(1, 3000, '2022-04-19'),(1, 1000, '2022-10-28'),(2, 3000, '2022-11-08'),(1, 3000, '2022-07-31'),(2, 500, '2022-03-25'),(3, 500, '2022-09-30'),(3, 1000, '2022-04-04'),(2, 3000, '2022-11-22'),(1, 1000, '2022-05-15');
 
-
-
-
-
+SELECT @jj:=seat_number FROM seats AS S
+            WHERE S.s_status = 0 AND S.train_id in (SELECT T.train_id FROM trips as T WHERE T.trip_id = 53)
+            LIMIT 1;
+            UPDATE seats
+			SET s_status = 1
+			WHERE train_id in (SELECT T.train_id FROM trips as T WHERE T.trip_id = 53) AND seat_number = @jj;
+            
+ 
 insert into tickets (payment_id, passenger_id , trip_id, seat_number)
 values  
-(1, 32, 53, 68), (2, 12, 77, 61), (3, 68, 26, 21), (4, 11, 77, 74), (5, 46, 18, 31), (6, 70, 47, 53), (7, 45, 26, 51), (8, 87, 3, 6), (9, 26, 80, 12), (10, 19, 89, 63), (11, 46, 91, 18), (12, 23, 20, 71), (13, 36, 87, 61), (14, 6, 34, 73), (15, 98, 77, 71), (16, 34, 18, 17), (17, 69, 62, 66), (18, 75, 60, 29), (19, 25, 48, 10), (20, 19, 47, 8), (21, 78, 91, 59), (22, 85, 89, 42), (23, 25, 78, 21), (24, 2, 80, 87), (25, 22, 29, 19), (26, 59, 76, 99), (27, 4, 99, 98), (28, 35, 31, 43), (29, 48, 17, 82), (30, 62, 53, 97), (31, 97, 75, 59), (32, 56, 21, 87), (33, 58, 30, 6), (34, 4, 1, 54), (35, 19, 63, 87), (36, 26, 76, 86), (37, 8, 54, 92), (38, 20, 42, 11), (39, 19, 15, 89), (40, 82, 61, 31), (41, 90, 8, 88), (42, 17, 97, 48), (43, 54, 69, 18), (44, 90, 40, 51), (45, 50, 90, 32), (46, 19, 5, 52), (47, 66, 94, 60), (48, 1, 55, 33), (49, 52, 71, 10), (50, 37, 24, 61), (51, 95, 46, 80), (52, 20, 35, 78), (53, 78, 99, 69), (54, 57, 100, 23), (55, 27, 22, 84), (56, 37, 64, 97), (57, 46, 61, 53), (58, 11, 16, 31), (59, 57, 73, 9), (60, 91, 18, 63), (61, 30, 57, 37), (62, 20, 29, 38), (63, 49, 4, 95), (64, 62, 53, 55), (65, 43, 63, 54), (66, 16, 19, 11), (67, 1, 89, 99), (68, 32, 22, 89), (69, 1, 37, 7), (70, 96, 73, 26), (71, 99, 64, 27), (72, 15, 90, 17), (73, 27, 19, 100), (74, 9, 74, 67), (75, 72, 28, 61), (76, 24, 2, 23), (77, 45, 75, 4), (78, 51, 5, 88), (79, 11, 47, 70), (80, 3, 3, 46), (81, 93, 27, 86), (82, 24, 46, 79), (83, 48, 65, 81), (84, 100, 81, 6), (85, 85, 50, 46), (86, 2, 74, 48), (87, 49, 28, 58), (88, 65, 88, 19), (89, 12, 94, 22), (90, 83, 62, 84), (91, 74, 3, 18), (92, 83, 18, 15), (93, 93, 96, 37), (94, 73, 32, 49), (95, 4, 11, 1), (96, 48, 95, 20), (97, 3, 41, 90), (98, 99, 66, 43), (99, 63, 5, 91);
+(1, 32, 53, 68), (2, 12, 77, 61), (3, 68, 26, 21), (4, 11, 77, 74), (5, 46, 18, 31), (6, 70, 47, 53), (7, 45, 26, 51), (8, 87, 3, 6), (9, 26, 80, 12), (10, 19, 89, 63), (11, 46, 91, 18), (12, 23, 20, 71), (13, 36, 87, 61), (14, 6, 34, 73), (15, 98, 77, 71), (16, 34, 18, 17), (17, 69, 62, 66), (18, 75, 60, 29), (19, 25, 48, 10), (20, 19, 47, 8), (21, 78, 91, 59), (22, 85, 89, 42), (23, 25, 78, 21), (24, 2, 80, 87), (25, 22, 29, 19), (26, 59, 76, 99), (27, 4, 99, 98), (28, 35, 31, 43), (29, 48, 17, 82), (30, 62, 53, 97), (31, 97, 75, 59), (32, 56, 21, 87), (33, 58, 30, 6), (34, 4, 1, 54), (35, 19, 63, 87), (36, 26, 76, 86), (37, 8, 54, 92), (38, 20, 42, 11), (39, 19, 15, 89), (40, 82, 61, 31), (41, 90, 8, 88), (42, 17, 97, 48), (43, 54, 69, 18), (44, 90, 40, 51), (45, 50, 90, 32), (46, 19, 5, 52), (47, 66, 94, 60), (48, 1, 55, 33), (49, 52, 71, 10), (50, 37, 24, 61), (51, 95, 46, 80), (52, 20, 35, 78), (53, 78, 99, 69), (54, 57, 100, 23), (55, 27, 22, 84), (56, 37, 64, 97), (57, 46, 61, 53), (58, 11, 16, 31), (59, 57, 73, 9), (60, 91, 18, 63), (61, 30, 57, 37), (62, 20, 29, 38), (63, 49, 4, 95), (64, 62, 53, 55), (65, 43, 63, 54), (66, 16, 19, 11), (67, 1, 89, 99), (68, 32, 22, 89), (69, 1, 37, 7), (70, 96, 73, 26), (71, 99, 64, 27), (72, 15, 90, 17), (73, 27, 19, 100), (74, 9, 74, 67), (75, 72, 28, 61), (76, 24, 2, 23), (77, 45, 75, 4), (78, 51, 5, 88), (79, 11, 47, 70), (80, 3, 3, 46), (81, 93, 27, 86), (82, 24, 46, 79), (83, 48, 65, 81), (84, 100, 81, 6), (85, 85, 50, 46), (86, 2, 74, 48), (87, 49, 28, 58), (88, 65, 88, 19), (89, 12, 94, 22), (90, 83, 62, 84), (91, 74, 3, 18), (92, 83, 18, 15), (93, 93, 96, 37), (94, 73, 32, 49), (95, 4, 11, 1), (96, 48, 95, 20), (97, 3, 41, 90), (98, 99, 66, 43);

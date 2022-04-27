@@ -16,9 +16,6 @@ class TripCreate(TripBase):
     route_id:int
     
    
-
-
-
 # Properties shared by models stored in DB
 class TripInDBBase(TripBase):
     trip_id: int

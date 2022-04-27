@@ -20,3 +20,9 @@ def get_route_by_id(id):
 
 def get_station_by_id(id):
     return db.engine.execute(stations.select().where(stations.c.id == id))
+
+def create_trip():
+    pass
+
+def update_trip(id:int):
+    pass

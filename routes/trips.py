@@ -1,5 +1,7 @@
 from fastapi import APIRouter
-from typing import List
+from typing import List, Optional
+
+import sqlalchemy
 from schemas.train import *
 from schemas.seat import Seat
 from schemas.trips import Trip, TripUpdate
@@ -19,7 +21,6 @@ def get_all():
     query = text("select * from available_trips")
     return db.engine.execute(query).all()
 
-@trip_route.get("/trips/{trip_id}")
 
 @trip_route.get("/train/{id}", response_model=Train, tags=["Trip"])
 def get_train(id:int):
@@ -37,7 +38,43 @@ def get_trip_by_location_to_destionation(location:str, destination:str):
     return db.engine.execute(query).all()
 
 
-
-@trip_route.put("/trips/", response_model=Trip, tags=["Trip"])
+@trip_route.put("/trips/", tags=["Trip"])
 def update_trip(trip:TripUpdate):
-    pass
+    return {**trip}
+
+@trip_route.get("admin/trips", tags=["admin"])
+def get_trips(location_from:Optional[str], location_to:str):
+
+    #run raw sql queries with python varialble
+    query = sqlalchemy.text("""
+        SELECT
+            *
+        FROM
+            trips AS T
+        WHERE
+            T.routeID IN (SELECT
+                    routeID
+                FROM
+                    routes AS R
+                WHERE
+                    R.location IN (SELECT
+                            id
+                        FROM
+                            stations AS S
+                        WHERE
+                            S.city = '{0}')
+                        AND R.final_destination IN (SELECT
+                            id
+                        FROM
+                            stations AS S
+                        WHERE
+                            S.city = '{1}'))
+                AND T.train_id IN (SELECT
+                    train_id
+                FROM
+                    seats AS S
+                WHERE
+                    S.s_status = 0);
+                    
+    """.format(location_from, location_to))
+    return db.engine.execute(query).all()
