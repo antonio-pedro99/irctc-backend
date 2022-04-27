@@ -20,6 +20,11 @@ def get_all_tickets():
 def get_by_id(id:int):
     return get_ticket_by_id(id)
 
+
+@ticket_route.post("/ticket/issue", tags=["tickets"])
+def issue_ticket(ticket:TicketCreate):
+    return create_user_ticket(ticket=ticket)
+
 @ticket_route.put("/tickets/cancel/", tags=["tickets"])
 def user_cancel_ticker(ticket:TicketUpdate,):
     ticket_db = get_ticket_by_id(ticket.ticket_id)
