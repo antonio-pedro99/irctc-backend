@@ -53,8 +53,8 @@ def create_route(location:int, destination:int, price:float):
     id =  db.engine.execute(query, **new_route).lastrowid
     return get_route_by_id(id=id)
 
-def update_route(routeID:int, price:float):
-    db.engine.execute(text("update routes set price = '{0}' where routeID ='{1}'".format(price, routeID)))
+def update_route(id:int, price:float):
+    db.engine.execute(text("update routes set price = '{0}' where routeID ='{1}'".format(price, id)))
     return {"updated"}
         
 def delete_route(routeID:int):

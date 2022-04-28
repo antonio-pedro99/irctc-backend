@@ -125,4 +125,15 @@ where R.location = 11 and R1.final_destination = 14);
 
 select * from available_trips where datediff(dt_departure, Now()) >= 0 group by dt_departure;
 
-select * from booked_tickets;
+SELECT 
+    S1.id AS location_from, S2.id AS location_to
+FROM
+    stations AS S1
+        INNER JOIN
+    stations AS S2 ON S1.city = 'Gurgaon'
+        AND S2.city = 'Shimla'
+        INNER JOIN
+    routes AS R ON R.location = S1.id
+        AND R.final_destination = S2.id;
+
+

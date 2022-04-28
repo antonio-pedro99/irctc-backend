@@ -57,6 +57,7 @@ create table seats (
     train_id mediumint(8) unsigned NOT NULL,
     s_status boolean not null default false,
     PRIMARY KEY(seat_number, train_id),
+	INDEX `idx_seat` (s_status ASC, seat_number asc),
     FOREIGN KEY(train_id) REFERENCES trains(id)
 );
 
@@ -113,7 +114,7 @@ create table tickets (
   FOREIGN KEY( passenger_id) REFERENCES passengers(id),
   FOREIGN KEY( trip_id) REFERENCES trips(trip_id),
   FOREIGN KEY(seat_number) REFERENCES seats(seat_number),
-INDEX(ticket_id, trip_id, passenger_id)
+  INDEX(ticket_id, trip_id, passenger_id)
 ) AUTO_INCREMENT = 1;
 
 CREATE TABLE `notification_template` (

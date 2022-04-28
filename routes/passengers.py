@@ -7,6 +7,6 @@ from schemas.passenger import *
 
 passenger_route = APIRouter()
 
-@passenger_route.get("/passengers",  response_model=List[Passenger], tags=["passenger"])
+@passenger_route.get("/passengers",  response_model=List[Passenger], tags=["admin/Passenger"])
 def get_passengers():
     return db.engine.execute("select * from passengers").all()

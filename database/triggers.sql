@@ -6,7 +6,7 @@ DELIMITER //
     begin
 		declare duration int;
         declare tmp int;
-        declare _duration varchar;
+        declare _duration varchar(8);
         declare _minute int;
         set tmp =  (datediff(hour, New.dt_departure, New.dt_arrival));
         

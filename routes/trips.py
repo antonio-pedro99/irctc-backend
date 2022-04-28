@@ -20,9 +20,9 @@ def get_seats(id:int):
     return get_seat_by_train_id(id=id)
 
 
-@trip_route.get("/trips/all", tags=["Trip"])
+@trip_route.get("/trips/all", tags=["admin/Trip"])
 def get_all():
-    query = text("select * from available_trips")
+    query = text("select * from available_trips_admin")
     return db.engine.execute(query).all()
 
 
@@ -62,6 +62,10 @@ def create_new_route(route:RouteCreate):
 def create_new_trip(trip:TripCreate):
    return create_trip(trip=trip)
 
-@trip_route.post("/trips/routes/{id}/update", tags=["admin/Trip"])
-def create_update_trip_price(id:int):
-   return update_route(id)
+@trip_route.put("/trips/routes/{id}/update", tags=["admin/Trip"])
+def create_update_trip_price(id:int, price:float):
+   return update_route(id=id, price=price)
+
+@trip_route.delete("/trips/routes/{id}/delete", tags=["admin/Trip"])
+def delete_route(id:int):
+   return  delete_route(id=id)
