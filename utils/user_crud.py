@@ -40,7 +40,7 @@ def update_user_details(user:UserUpdate, id:int):
    # return db.engine.execute(users.select().where(users.c.id == id))
 
 def get_notifications(id:int):
-    query = text("select * from notifications_view where passenger_id = '{0}'".format(id))
+    query = text("select * from notifications_view_user where passenger_id = '{0}'".format(id))
     return db.engine.execute(query).all()
 
 def read_notification(user_id:int, notification_id:int):

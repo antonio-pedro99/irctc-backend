@@ -1,4 +1,6 @@
 from datetime import datetime
+from typing import Optional
+from venv import create
 from fastapi import HTTPException
 from sqlalchemy import text
 from config import db
@@ -8,7 +10,7 @@ from models.trips import trips
 from models.routes import routes
 from models.stations import stations
 from schemas.trips import TripCreate, TripUpdate
-from utils.cruds import get_route_by_station
+from utils.cruds import create_route, get_route_by_station, get_station_by_name
 
 def get_seat_by_train_id(id):
     return db.engine.execute(seats.select().where(seats.c.train_id  == id)).all()
@@ -30,13 +32,19 @@ def get_station_by_id(id):
     return db.engine.execute(stations.select().where(stations.c.id == id))
 
 def create_trip(trip:TripCreate):
-    route_id = get_route_by_station(location_name=trip.location_station, location_city=trip.location_city, final_destination_city=trip.final_destination_city, final_destination_name=trip.final_destination_station)["routeID"]
-    trip_db = {**get_trip_by_routeID(route_id)}
-    if trip_db:
-        if trip_db["dt_departure"] != trip.dt_departure:
-            inserted = db.engine.execute(trips.insert().values(train_id = trip.train_id, routeID= route_id, dt_departure= trip.dt_departure, dt_arrival= trip.dt_arrival)).lastrowid
-            return get_trip_by_id(id=inserted)
+    route_db = get_route_by_station(location_name=trip.location_station, location_city=trip.location_city, final_destination_city=trip.final_destination_city, final_destination_name=trip.final_destination_station)
+    if route_db:
+            trip_ = get_trip_by_routeID(route_db)
+            if trip_:
+                trip_db = {**trip_}
+                if trip_db["dt_departure"] != trip.dt_departure:
+                    inserted = db.engine.execute(trips.insert().values(train_id = trip.train_id, routeID= route_db, dt_departure= trip.dt_departure, dt_arrival= trip.dt_arrival)).lastrowid
+                    return get_trip_by_id(id=inserted)
+            else:
+                inserted = db.engine.execute(trips.insert().values(train_id = trip.train_id, routeID= route_db, dt_departure= trip.dt_departure, dt_arrival= trip.dt_arrival)).lastrowid
+                return get_trip_by_id(id=inserted)
     raise HTTPException(status_code=400, detail="can not add this trip")
+
 
 def get_trip_admin(location_from:str, location_to:str):
     query = text("""
@@ -67,8 +75,7 @@ def get_trip_admin(location_from:str, location_to:str):
                 FROM
                     seats AS S
                 WHERE
-                    S.s_status = 0);
-                    
+                    S.s_status = 0);        
     """.format(location_from, location_to))
 
     return db.engine.execute(query).all()

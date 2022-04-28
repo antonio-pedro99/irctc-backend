@@ -21,9 +21,31 @@ FROM
         INNER JOIN
     trips AS TRIP ON TRIP.routeID = R.routeID
         INNER JOIN
-    stations AS DESTINATION ON R.final_destination = DESTINATION.id
-        AND DATEDIFF(TRIP.dt_departure, NOW()) >= 0;
+    stations AS DESTINATION ON R.final_destination = DESTINATION.id;
 
+
+drop view if exists unavailable_trips;
+create  view unavailable_trips as SELECT 
+    LOCATION.city AS location_from,
+    LOCATION.name AS local_metrostation,
+    LOCATION.code AS location_code,
+	DESTINATION.city AS destination_to,
+    DESTINATION.name AS destination_metrostation,
+    DESTINATION.code AS destination_code,
+    R.price,
+    TRIP.trip_id,
+    TRIP.dt_departure,
+    TRIP.duration,
+    TRIP.train_id,
+    TRIP.dt_arrival
+FROM
+    stations AS LOCATION
+        INNER JOIN
+    routes AS R ON LOCATION.id = R.location
+        INNER JOIN
+    trips AS TRIP ON TRIP.routeID = R.routeID
+        INNER JOIN
+    stations AS DESTINATION ON R.final_destination = DESTINATION.id;
 
 
 drop view  if exists booked_tickets; 
@@ -42,15 +64,16 @@ CREATE VIEW booked_tickets AS
         TRIP.dt_arrival AS arrival,
         TICKET.seat_number AS seat
     FROM
-        available_trips AS TRIP
+        unavailable_trips AS TRIP
             INNER JOIN
         tickets AS TICKET ON TICKET.trip_id = TRIP.trip_id
             INNER JOIN
         users AS USER ON passenger_id = USER.id
-    ORDER BY passenger_id ;
+    ORDER BY ticket_id ;
     
-drop view if exists notifications_view; 
- CREATE VIEW notifications_view AS
+    
+drop view if exists notifications_view_user; 
+ CREATE VIEW notifications_view_user AS
     SELECT 
         N.title AS title,
         N.sourceId AS `source`,
@@ -62,5 +85,16 @@ drop view if exists notifications_view;
             INNER JOIN
         booked_tickets AS T ON T.trip_id = N.sourceId;
 
- 
+ drop view if exists notifications_view_station; 
+ CREATE VIEW notifications_view_station AS
+    SELECT 
+        N.title AS title,
+        N.sourceId AS `source`,
+        N.createdAt AS `date`,
+        N.content AS content,
+        T.passenger_id
+    FROM
+        notification_template AS N
+            INNER JOIN
+        booked_tickets AS T ON T.trip_id = N.sourceId;
  

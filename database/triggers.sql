@@ -2,9 +2,21 @@
 
 
 DELIMITER //
-	create trigger create_ticket_after_insert_payment after insert on payments for each row
+	create trigger update_trip_duration after insert on trips for each row
     begin
-		
+		declare duration int;
+        declare tmp int;
+        declare _duration varchar;
+        declare _minute int;
+        set tmp =  (datediff(hour, New.dt_departure, New.dt_arrival));
+        
+        if tmp = 0 then
+			set _duration =  (timestampdiff(minute, New.dt_departure, New.dt_arrival));
+		else 
+			set _duration = tmp;
+		end if;
+        
+        update trips set duration = _duration where trip_id = New.trip_id;
     end;
 //
 
@@ -43,17 +55,21 @@ after update on railway_system.trips for each row
  
  
  
+
  delimiter //
-create trigger after_update__ticket
-after insert on notification_template for each row follows after_update_trip
+create trigger after_insert_ticket
+after insert on tickets for each row 
  begin
 	declare msg varchar(255);
     declare _type varchar(50);
+    declare title varchar(100);
     declare date_now datetime;
-    set _type = "Trip change";
+    
     set date_now = (select Now());
-	set msg = concat("Your trip with number  ", Old.id, " changed the schedule from ", Old.date, " to ", New.date);
-	insert into test.notifications(userId,sourceType, updatedAt, content) values(Old.user_id, _type, date_now, msg);
+	set msg = "You have just received a new booking.";
+    set title = "New booking";
+    
+	insert into railway_system.notification_template(title, sourceId, createdAt, content)  values(title, New.ticket_id, date_now, msg);
  end //
 
 

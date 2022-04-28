@@ -4,10 +4,11 @@ from typing import List, Optional
 
 import sqlalchemy
 from schemas.query import SearchQueryBase
+from schemas.route import RouteCreate
 from schemas.train import *
 from schemas.seat import Seat
 from schemas.trips import Trip, TripCreate, TripUpdate
-from utils.cruds import get_route_by_station, get_station_by_name
+from utils.cruds import create_route, get_route_by_station, get_station_by_name
 from utils.trips_crud import create_trip, get_seat_by_train_id, get_train_by_id, get_trip_admin, get_trip_by_id, update_trip_details
 from config import db
 from sqlalchemy import text
@@ -53,7 +54,10 @@ def update_trip(trip:TripUpdate, id:int):
 def get_trips(location_from:Optional[str], location_to:str):
    return get_trip_admin(location_from=location_from, location_to=location_to)
 
-
+@trip_route.post("/admin/routes", tags=["admin/Trip"])
+def create_new_route(route:RouteCreate):
+    return create_route(route.location, route.final_destination, route.price)
+    
 @trip_route.post("/trips/new", tags=["admin/Trip"])
 def create_new_trip(trip:TripCreate):
    return create_trip(trip=trip)
