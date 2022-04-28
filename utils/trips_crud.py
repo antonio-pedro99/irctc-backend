@@ -40,9 +40,7 @@ def create_trip(trip:TripCreate):
                 if trip_db["dt_departure"] != trip.dt_departure:
                     inserted = db.engine.execute(trips.insert().values(train_id = trip.train_id, routeID= route_db, dt_departure= trip.dt_departure, dt_arrival= trip.dt_arrival)).lastrowid
                     return get_trip_by_id(id=inserted)
-            else:
-                inserted = db.engine.execute(trips.insert().values(train_id = trip.train_id, routeID= route_db, dt_departure= trip.dt_departure, dt_arrival= trip.dt_arrival)).lastrowid
-                return get_trip_by_id(id=inserted)
+         
     raise HTTPException(status_code=400, detail="can not add this trip")
 
 
