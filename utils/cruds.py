@@ -54,5 +54,10 @@ def create_route(location:int, destination:int, price:float):
     return get_route_by_id(id=id)
 
 def update_route(routeID:int, price:float):
-    pass
+    db.engine.execute(text("update routes set price = '{0}' where routeID ='{1}'".format(price, routeID)))
+    return {"updated"}
+        
+def delete_route(routeID:int):
+    db.engine.execute(text("delete routes set where routeID = '{0}'".format(routeID)))
+    return {"updated"}
         

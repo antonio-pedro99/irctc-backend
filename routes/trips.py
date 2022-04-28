@@ -8,7 +8,7 @@ from schemas.route import RouteCreate
 from schemas.train import *
 from schemas.seat import Seat
 from schemas.trips import Trip, TripCreate, TripUpdate
-from utils.cruds import create_route, get_route_by_station, get_station_by_name
+from utils.cruds import create_route, get_route_by_station, get_station_by_name, update_route
 from utils.trips_crud import create_trip, get_seat_by_train_id, get_train_by_id, get_trip_admin, get_trip_by_id, update_trip_details
 from config import db
 from sqlalchemy import text
@@ -61,3 +61,7 @@ def create_new_route(route:RouteCreate):
 @trip_route.post("/trips/new", tags=["admin/Trip"])
 def create_new_trip(trip:TripCreate):
    return create_trip(trip=trip)
+
+@trip_route.post("/trips/routes/{id}/update", tags=["admin/Trip"])
+def create_update_trip_price(id:int):
+   return update_route(id)
