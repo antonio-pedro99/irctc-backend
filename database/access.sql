@@ -6,6 +6,8 @@ FLUSH privileges;
 
 
 CREATE USER 'rony.frontendteam'@'localhost' IDENTIFIED BY '12345678';
-grant all on seats to 'rony.frontendteam'@'localhost';
+grant select, insert, update, delete on *.* to 'rony.frontendteam'@'localhost';
+
+FLUSH privileges;
 
 show grants for 'rohan.backendteam'@'localhost';
