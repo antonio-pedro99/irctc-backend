@@ -10,6 +10,7 @@ def create_payment(payment_method_id:int, amount:float):
         "amount": amount,
         "date": datetime.now()
     }
+    
     q =  text("""insert into payments(p_methodID, amount, date) values(:p_methodID, :amount, :date)""")
     inserted =db.engine.execute(q, **payment).lastrowid
 

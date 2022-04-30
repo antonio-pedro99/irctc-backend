@@ -111,7 +111,7 @@ create table tickets (
   t_status boolean not null default true,
   PRIMARY KEY(ticket_id),
   FOREIGN KEY(payment_id) REFERENCES payments(paymentID),
-  FOREIGN KEY( passenger_id) REFERENCES passengers(id),
+  FOREIGN KEY( passenger_id) REFERENCES users(id),
   FOREIGN KEY( trip_id) REFERENCES trips(trip_id),
   FOREIGN KEY(seat_number) REFERENCES seats(seat_number),
   INDEX(ticket_id, trip_id, passenger_id)
