@@ -72,5 +72,5 @@ after insert on tickets for each row
 	insert into railway_system.notification_template(title, sourceId, createdAt, content)  values(title, New.ticket_id, date_now, msg);
  end //
 
-
+select * from notifications_view_station;
  

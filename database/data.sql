@@ -14,6 +14,7 @@ VALUES
   ("Zeph Watts",23,"female","zephwatts4910@icloud.net","6256317771","BGO14ZNX7JH");
 INSERT INTO `users` (`name`,`age`,`gender`,`email`,`phone`,`password`)
 VALUES
+  ("Caputo Dev",22,"male","caputo@dev.co","2986500934","caputo"),
   ("Darryl Owen",41,"male","darrylowen@google.org","2986548934","LUP97TEY7PG"),
   ("Nadine Reed",41,"male","nadinereed8337@protonmail.edu","1333045205","VAZ79NRV7YJ"),
   ("Wade Oneal",84,"male","wadeoneal6592@google.couk","4720682460","PLV76CIF8CX"),
