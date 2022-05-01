@@ -7,20 +7,25 @@ from sqlalchemy import text
 from schemas.user import UserUpdate
 
 def get_all_users():
-    return db.engine.execute(users.select()).all();
+    query = text("select * from users")
+    return db.engine.execute(query).all();
 
 def get_user_by_id(id:int):
-    return db.engine.execute(users.select().where(users.c.id == id)).first()
+    query = text("select * from users where id = '{0}'".format(id))
+    return db.engine.execute(query).first()
 
 def get_user_tickets(id:int):
     query = text("select * from booked_tickets where passenger_id = '{0}'".format(id))
     return db.engine.execute(query).all()
 
 def get_user_by_email(email:str):
-     return db.engine.execute(users.select().where(users.c.email == email)).first()
+     query = text("select * from users where email = '{0}'".format(email))
+     return db.engine.execute(query).first()
 
 def get_details(id:int):
-    return db.engine.execute(users.select().where(users.c.id == id)).first()
+    query = text("select * from users where id = '{0}'".format(id))
+    return db.engine.execute(query).first()
+    #return db.engine.execute(users.select().where(users.c.id == id)).first()
 
 
 def update_user_details(user:UserUpdate, id:int):

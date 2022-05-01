@@ -13,23 +13,29 @@ from schemas.trips import TripCreate, TripUpdate
 from utils.cruds import create_route, get_route_by_station, get_station_by_name
 
 def get_seat_by_train_id(id):
-    return db.engine.execute(seats.select().where(seats.c.train_id  == id)).all()
+    query = text("select * from trains where id = '{0}'".format(id))
+    return db.engine.execute(query).all()
 
 def get_train_by_id(id):
-    return db.engine.execute(trains.select().where(trains.c.id == id)).first()
+    query = text("select * from trains where id = '{0}'".format(id))
+    return db.engine.execute(query).first()
 
 def get_trip_by_id(id):
-    return db.engine.execute(trips.select().where(trips.c.trip_id == id)).first()
+    query = text("select * from trips where trip_id = '{0}'".format(id))
+    return db.engine.execute(query).first()
 
 def get_route_by_id(id):
-    return db.engine.execute(routes.select().where(routes.c.routeID == id)).first()
+    query = text("select * from routes where routeID = '{0}'".format(id))
+    return db.engine.execute(query).first()
 
 
 def get_trip_by_routeID(id:int):
-    return db.engine.execute(trips.select().where(trips.c.routeID == id)).first()
+    query = text("select * from trips where routeID = '{0}'".format(id))
+    return db.engine.execute(query).first()
 
 def get_station_by_id(id):
-    return db.engine.execute(stations.select().where(stations.c.id == id))
+    query = text("select * from stations where id = '{0}'".format(id))
+    return db.engine.execute(query).first()
 
 def create_trip(trip:TripCreate):
     route_db = get_route_by_station(location_name=trip.location_station, location_city=trip.location_city, final_destination_city=trip.final_destination_city, final_destination_name=trip.final_destination_station)
