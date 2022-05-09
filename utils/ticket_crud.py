@@ -6,10 +6,12 @@ from schemas.tickets import TicketCreate
 from utils.user_crud import get_user_tickets
 
 def get_all_tickets():
-    return db.engine.execute(tickets.select()).all()
+    query = text("select * from tickets")
+    return db.engine.execute(query).all()
 
 def get_ticket_by_user_id(userID:int):
-    return db.engine.execute(tickets.select().where(tickets.c.passenger_id == userID)).all()
+    query = text("select * from tickets where passenger_id = '{0}'".format(userID))
+    return db.engine.execute(query).all()
 
 def get_ticket_by_id(id:int):
     query =  query = text("select * from booked_tickets where ticket_id = '{0}'".format(id));
@@ -39,8 +41,16 @@ def create_user_ticket(ticket:TicketCreate):
     
     db.engine.execute(update_seat)
 
-    db.engine.execute(tickets.insert().values(passenger_id=ticket.passenger_id, payment_id=ticket.payment_id, trip_id = ticket.trip_id, seat_number = new_seat))
+    new_ticket = {
+        "trip_id": ticket.trip_id,
+        "passenger_id": ticket.passenger_id,
+        "payment_id": ticket.payment_id,
+        "seat_number": new_seat
+    }
 
+    query = text(""" insert into tickets(payment_id, passenger_id , trip_id, seat_number) values (:payment_id, :passenger_id, :trip_id, :seat_number)""")
+   # db.engine.execute(tickets.insert().values(passenger_id=ticket.passenger_id, payment_id=ticket.payment_id, trip_id = ticket.trip_id, seat_number = new_seat))
+    db.engine.execute(query, **new_ticket)
     return get_user_tickets(id=ticket.passenger_id)[-1]
 
 def cancel_ticket(passenger_id:int, trip_id:int):

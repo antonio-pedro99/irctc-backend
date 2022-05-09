@@ -8,3 +8,4 @@ aiosqlite
 aiomysql
 pymysql
 python-multipart==0.0.5
+passlib[bcrypt]
