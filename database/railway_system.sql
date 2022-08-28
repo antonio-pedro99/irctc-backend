@@ -1,7 +1,6 @@
-drop database if exists railway_system;
-create database if not exists railway_system;
-use railway_system;
-
+drop database if exists irctc_db;
+create database if not exists irctc_db;
+use irctc_db;
 
 
 ## creating tables
