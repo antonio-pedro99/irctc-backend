@@ -1,9 +1,7 @@
 from fastapi import HTTPException
-from typing import List
 from fastapi import APIRouter
 from config import db
 from schemas.tickets import Ticket, TicketUpdate
-from models.tickets import tickets
 from utils.ticket_crud import *
 from sqlalchemy import text
 

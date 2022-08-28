@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from schemas.payment import PaymentCreate
 from utils.payment import create_payment, get_payment_methods
 

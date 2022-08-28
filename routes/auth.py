@@ -2,7 +2,6 @@ from sqlalchemy import text
 from fastapi import APIRouter, HTTPException
 from config import db
 from config.security import hash_password, verify_pwd
-from models.users import users
 from schemas.user import User, UserCreate, UserLogin
 
 auth_route = APIRouter()

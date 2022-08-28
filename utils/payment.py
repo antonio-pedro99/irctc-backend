@@ -1,7 +1,6 @@
 from datetime import datetime
 from sqlalchemy import text
 from config import db
-from models.stations import stations
 from sqlalchemy import text
 
 def create_payment(payment_method_id:int, amount:float):
