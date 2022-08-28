@@ -1,117 +1,13 @@
-aiofiles==0.6.0
-aiohttp==3.8.1
-aiomysql==0.0.22
-aioredis==2.0.1
-aiosignal==1.2.0
-aiosqlite==0.17.0
-anyio==3.3.4
-arrow==1.2.2
-asgiref==3.5.2
-async-timeout==4.0.2
-attrs==21.4.0
-bcrypt==3.2.2
-binaryornot==0.4.4
-brotlipy==0.7.0
-CacheControl==0.12.11
-cachetools==5.2.0
-certifi==2021.10.8
-cffi @ file:///C:/ci_310/cffi_1642682485096/work
-chardet==4.0.0
-charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
-cleo==1.0.0a4
-click @ file:///C:/ci/click_1646038595831/work
-colorama @ file:///tmp/build/80754af9/colorama_1607707115595/work
-conda==4.12.0
-conda-package-handling @ file:///C:/ci/conda-package-handling_1618262410900/work
-cookiecutter==1.7.3
-crashtest==0.3.1
-cryptography @ file:///C:/ci/cryptography_1639414720302/work
-databases==0.5.3
-Deprecated==1.2.13
-dj-database-url==1.0.0
-Django==4.1
-dnspython==2.2.1
-docopt==0.6.2
-email-validator==1.1.3
-fastapi==0.65.1
-firebase-admin==5.2.0
-frozenlist==1.3.0
-geographiclib==1.52
-geopy==2.2.0
-google-api-core==2.8.2
-google-api-python-client==2.53.0
-google-auth==2.9.1
-google-auth-httplib2==0.1.0
-google-cloud-core==2.3.1
-google-cloud-firestore==2.5.3
-google-cloud-storage==2.4.0
-google-crc32c==1.3.0
-google-resumable-media==2.3.3
-googleapis-common-protos==1.56.4
-greenlet==1.1.2
-grpcio==1.47.0
-grpcio-status==1.47.0
-h11==0.12.0
-hiredis==2.0.0
-httplib2==0.20.4
-idna @ file:///tmp/build/80754af9/idna_1637925883363/work
-Jinja2==3.0.0
-jinja2-time==0.2.0
-MarkupSafe==2.0.0
-menuinst==1.4.16
-msgpack==1.0.4
-multidict==6.0.2
-numpy==1.23.0
-packaging==21.3
-pandas==1.4.3
-passlib==1.7.4
-pipreqs==0.4.11
-poyo==0.5.0
-pptree==3.1
-prettier==0.0.7
-pretty==0.1
-proto-plus==1.20.6
-protobuf==3.20.1
-psycopg2==2.9.3
-pyasn1==0.4.8
-pyasn1-modules==0.2.8
-pycosat==0.6.3
-pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
-pydantic==1.8.2
-pygame==2.1.0
-pylev==1.4.0
-PyMySQL==0.9.3
-pyOpenSSL @ file:///opt/conda/conda-bld/pyopenssl_1643788558760/work
-pyparsing==3.0.7
-PySocks @ file:///C:/ci/pysocks_1605307512533/work
-python-dateutil==2.8.2
-python-dotenv==0.19.2
-python-multipart==0.0.5
-python-slugify==6.1.1
-python-ulid==1.1.0
-pytz==2022.1
-pywin32==302
-redis==4.2.0
-redis-om==0.0.20
-requests @ file:///opt/conda/conda-bld/requests_1641824580448/work
-rsa==4.8
-ruamel-yaml-conda @ file:///C:/ci/ruamel_yaml_1616016898638/work
-six @ file:///tmp/build/80754af9/six_1644875935023/work
-sniffio==1.2.0
+cryptography==36.0.2
+databases==0.5.5
+fastapi==0.75.0
+pydantic==1.9.0
 SQLAlchemy==1.4.32
-sqlparse==0.4.2
-starlette==0.17.1
-text-unidecode==1.3
-tqdm @ file:///tmp/build/80754af9/tqdm_1635330843403/work
-types-redis==4.1.18
-types-six==1.16.12
-typing_extensions==4.1.1
-tzdata==2022.2
-uritemplate==4.1.1
-urllib3 @ file:///opt/conda/conda-bld/urllib3_1643638302206/work
 uvicorn==0.13.4
-win-inet-pton @ file:///C:/ci/win_inet_pton_1605306162074/work
-wincertstore==0.2
-wrapt==1.14.0
-yarg==0.1.9
-yarl==1.7.2
+aiosqlite
+aiomysql
+pymysql
+python-multipart==0.0.5
+passlib[bcrypt]
+psycopg2==2.9.3
+dj-database-url==1.0.0
