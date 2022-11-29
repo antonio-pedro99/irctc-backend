@@ -1,6 +1,6 @@
 # backend
 <h6 align="center" >
-    Backend for [shields. io](https://shields.io/) [IRCTC app](https://github.com/antonio-pedro99/irctc-app). This backend was used to maintain, secure and give access to the database through RestAPI calls.
+    Backend for <a href="https://github.com/antonio-pedro99/irctc-app"> IRCTC APP </a>. This backend was used to maintain, secure and give access to the database through RestAPI calls.
 </h1>
 
 ## Inital setup for project 
