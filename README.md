@@ -63,7 +63,7 @@ ___
 
 ___
 
-
+#### To build the Database, you need to checkout to dev branch and find the SQl queries under databse folder.
 
 # FastAPI GUIDE
 https://fastapi.tiangolo.com/
