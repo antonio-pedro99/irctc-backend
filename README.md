@@ -1,6 +1,6 @@
 # backend
 <h6 align="center" >
-    Backend for [IRCTC app](https://github.com/antonio-pedro99/irctc-app).This backend was used to maintain, secure and give access to the database through RestAPI calls.
+    Backend for [IRCTC app](https://github.com/antonio-pedro99/irctc-app). This backend was used to maintain, secure and give access to the database through RestAPI calls.
 </h1>
 
 ## Inital setup for project 
