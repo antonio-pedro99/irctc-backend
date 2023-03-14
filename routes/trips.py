@@ -37,7 +37,7 @@ def get_train(id:int):
     return train_dict
 
 @trip_route.get("/trips/{location}/to/{destination}", tags=["Trip"])
-def get_trip_by_location_to_destionation(location:str, destination:str):
+def get_trip_by_location_to_destination(location:Optional[str], destination:Optional[str]):
     query = text("""select * from 
         available_trips
             where 

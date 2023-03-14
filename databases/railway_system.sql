@@ -1,6 +1,6 @@
-drop database if exists irctc_db;
-create database if not exists irctc_db;
-use irctc_db;
+drop database if exists railway_system;
+create database if not exists railway_system;
+use railway_system;
 
 
 ## creating tables
@@ -100,7 +100,7 @@ create table payments (
   FOREIGN KEY(p_methodID) REFERENCES payment_methods(p_methodID)
 ) AUTO_INCREMENT = 1;
 
-
+DROP TABLE if exists tickets;
 create table tickets (
   ticket_id  mediumint(8) NOT NULL auto_increment,
   payment_id mediumint(8)  NOT NULL,

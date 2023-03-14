@@ -1,6 +1,6 @@
 ## creating all triggers
 
-
+use railway_system;
 DELIMITER //
 	create trigger update_trip_duration after insert on trips for each row
     begin
@@ -56,7 +56,7 @@ after update on railway_system.trips for each row
  
  
 
- delimiter //
+delimiter //
 create trigger after_insert_ticket
 after insert on tickets for each row 
  begin
