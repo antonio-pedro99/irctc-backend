@@ -29,7 +29,7 @@ def get_route_by_id(id):
     return db.engine.execute(query).first()
 
 
-def get_trip_by_routeID(id:int):
+def get_trip_by_route_id(id:int):
     query = text("select * from trips where routeID = '{0}'".format(id))
     return db.engine.execute(query).first()
 
@@ -40,7 +40,7 @@ def get_station_by_id(id):
 def create_trip(trip:TripCreate):
     route_db = get_route_by_station(location_name=trip.location_station, location_city=trip.location_city, final_destination_city=trip.final_destination_city, final_destination_name=trip.final_destination_station)
     if route_db:
-            trip_ = get_trip_by_routeID(route_db)
+            trip_ = get_trip_by_route_id(route_db)
             if trip_:
                 trip_db = {**trip_}
                 if trip_db["dt_departure"] != trip.dt_departure:

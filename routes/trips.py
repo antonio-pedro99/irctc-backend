@@ -25,6 +25,12 @@ def get_all():
     query = text("select * from available_trips_admin")
     return db.engine.execute(query).all()
 
+@trip_route.get("/trips/all_from_current_location/{current_location}", tags=["Trip"])
+def get_trip_by_current_location(current_location:str):
+    query = text("""select * from available_trips where
+            location_from = '{0}'""".format(current_location))
+    return db.engine.execute(query).all()
+
 
 @trip_route.get("/train/{id}", response_model=Train, tags=["Trip"])
 def get_train(id:int):
