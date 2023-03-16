@@ -7,4 +7,5 @@ schemas/__pycache__/
 /irctc-backend
 /script
 /.env
+/db
 
