@@ -6,3 +6,5 @@ routes/__pycache__/
 schemas/__pycache__/
 /irctc-backend
 /script
+/.env
+
