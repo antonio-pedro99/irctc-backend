@@ -36,7 +36,7 @@
 ___
 ## Interactive Docs
    - open http://localhost:8000/docs
-   - alternatively http://localhost:800/redoc
+   - alternatively http://localhost:8000/redoc
 ___
 
 # FastAPI GUIDE
