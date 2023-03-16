@@ -16,7 +16,10 @@
 ## MySQL Database
     You need a mysql server running on your machine. Therefore, make sure you have an instance of mysql running. Furthermore, you now need to create the `railway_system` database, you can name it as per your wishes. After this, follow the steps:
      - Go to `db` and run each .sql file starting from railway_system, views, triggers, data. 
-     - Go to your .env file and fill the parameters accordingly.
+     - Create .env file and fill the parameters accordingly. It should look like this
+            `MYSQL_DATABASE = "<your mysql db>"
+             MYSQL_USER = "<your mysql user>"
+             MYSQL_ROOT_PASSWORD = "<your mysql password>"`
      
      Now you will be able to acess the database.
      
