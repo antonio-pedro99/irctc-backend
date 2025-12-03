@@ -48,3 +48,7 @@ https://fastapi.tiangolo.com/
 # SQLALCHEMY GUIDE
 
 https://docs.sqlalchemy.org/en/14/
+
+# Contributing
+
+For contributions, see `CONTRIBUTING.md`.
